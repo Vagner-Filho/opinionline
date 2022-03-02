@@ -10,14 +10,20 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style lang="scss">
+@font-face {
+  font-family: "Great-Vibes";
+  src: url(./assets/fonts/GreatVibes-Regular.ttf);
+}
+@font-face {
+  font-family: "Josefin-Sans";
+  src: url(./assets/fonts/JosefinSans-VariableFont_wght.ttf);
+}
 #app {
-  $test-color: blue;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Josefin-Sans, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  background-color: $test-color;
 }
 </style>
