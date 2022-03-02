@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "cypress": "^9.5.1",
+    "firebase": "^9.6.7",
     "vue": "^3.2.25"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",
     "jest": "^27.5.1",
+    "sass": "^1.49.9",
     "typescript": "^4.5.4",
     "vite": "^2.8.0",
     "vue-tsc": "^0.29.8"
