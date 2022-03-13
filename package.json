@@ -1,7 +1,7 @@
 {
   "name": "opinionline",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -10,7 +10,8 @@
   "dependencies": {
     "cypress": "^9.5.1",
     "firebase": "^9.6.7",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",
