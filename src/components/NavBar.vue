@@ -1,7 +1,7 @@
 <template>
   <nav>
     <h1 v-if="!hideLogo" class="logo-text m-0">Opinionline</h1>
-    <img v-else :src="articleCover" alt="article-cover" class="article-cover">
+    <img v-else :src="articleCover" alt="article-cover">
     <div class="menu-container w-100">
       <button class="light-green-bg" :class="{'selected-button': viewPosition === 0}" type="button" @click="$emit('set-position', ViewPosition.Initial)">Inicio</button>
       <button class="light-green-bg" :class="{'selected-button': viewPosition === 1}" type="button" @click="$emit('set-position', ViewPosition.Category)">Categorias</button>
@@ -22,10 +22,11 @@ import { ViewPosition } from '../utils/types';
 
 <style scoped lang="scss">
   nav {
-    position: absolute;
     width: 100vw;
-    top: 0;
-    left: 0;
+    top: -8px;
+    left: -8px;
+    position: relative;
+    max-width: 1920px;
     img {
       width: 100%
     }

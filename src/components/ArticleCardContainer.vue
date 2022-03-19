@@ -4,13 +4,18 @@
     <ArticleCard v-for="(article, index) in articles" :key="index"
       :background-url="article.coverUlr"
       :article-id="index"
-      @expand-article="expandArticle(index)"
+      @expand-article="expandArticle(index, article.coverUlr)"
     />
   </main>
-  <main v-else-if="!expandingArticle && articleExpanded" class="container">
+  <main v-else-if="!expandingArticle && articleExpanded" class="container" id="expanded-article">
     <ExpandedArticle 
       :expanded-article="expandedArticle"
     />
+  </main>
+  <main v-else-if="expandingArticle && !articleExpanded" class="container">
+    <div class="spinner">
+      <div class="loader" />
+    </div>
   </main>
 </template>
 
@@ -49,15 +54,15 @@ const expandedArticle = {
 }
 
 const emit = defineEmits<{
-  (e: 'set-position', position: number, cover: string): void
+  (e: 'set-position', position: number, coverPath: string): void
 }>()
-const expandArticle = (id: number) => {
+const expandArticle = (id: number, coverPath: string) => {
   expandingArticle.value = true
   // TODO: get article from api
   setTimeout(() => {
     expandingArticle.value = false
     articleExpanded.value = true
-    emit('set-position', ViewPosition.ExpandedArticle, expandedArticle.cover)
+    emit('set-position', ViewPosition.ExpandedArticle, coverPath)
   }, 2000);
 }
 </script>
@@ -69,6 +74,7 @@ const expandArticle = (id: number) => {
     justify-content: center;
     align-items: center;
     padding: 0 10px;
+    min-height: 300px;
     button {
       text-decoration: underline;
       font-family: 'Josefin-Sans';

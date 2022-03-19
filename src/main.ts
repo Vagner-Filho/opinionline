@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import Opinionline from './Opinionline.vue'
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -23,4 +23,4 @@ import App from './App.vue'
 // const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-createApp(App).mount('#app')
+createApp(Opinionline).mount('#app')

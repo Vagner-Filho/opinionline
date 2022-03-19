@@ -9,10 +9,10 @@ import ArticleCardContainer from './components/ArticleCardContainer.vue';
 const viewPosition = ref(0)
 const hideLogo = ref(false)
 const articleCover = ref('...')
-const setViewPosition = (pos: number, cover: string) => {
+const setViewPosition = (pos: number, coverPath: string) => {
   if (pos === 4) {
     hideLogo.value = true
-    articleCover.value = cover
+    articleCover.value = coverPath
   }
   viewPosition.value = pos;
 }
@@ -25,7 +25,6 @@ const setViewPosition = (pos: number, cover: string) => {
     :article-cover="articleCover"
     @set-position="setViewPosition"
   />
-  <div class="m-navbar" />
   <ArticleCardContainer
     @set-position="setViewPosition"
   />
@@ -82,7 +81,30 @@ const setViewPosition = (pos: number, cover: string) => {
 .highlight-green {
   background-color: #7FFC7C;
 }
-.m-navbar {
-  margin-top: 150px;
-}
+  .spinner {
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    border: 7px solid #2DCF3D;
+    position: relative;
+    .loader {
+      width: 58px;
+      height: 14px;
+      background-color: #fff;
+      animation: spin 2s cubic-bezier(0.41, -0.15, 0.58, 1.37) infinite;
+      position: absolute;
+      top: 43px;
+      left: 50px;
+    }
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+        transform-origin: left;
+      }
+      to {
+        transform: rotate(360deg);
+        transform-origin: left;
+      }
+    }
+  }
 </style>

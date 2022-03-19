@@ -53,7 +53,7 @@ import { onMounted } from 'vue';
     }
     main {
       padding: 0 7px 10px 7px;
-      height: 235px;
+      height: 255px;
       div.article-head {
         display: inline-flex;
         width: 100%;
