@@ -1,34 +1,42 @@
+<template>
+  <NavBar 
+    :hide-logo="hideLogo"
+    :article-cover="articleCover"
+    @set-position="setUserPosition"
+  />
+  <ArticleCardContainer
+    :user-position="userPosition"
+    @set-position="setUserPosition"
+  />
+</template>
+
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
+import { UserPosition, ViewControllerInterface } from './utils/types';
+import { viewControllerKey } from './utils/keys';
 import NavBar from './components/NavBar.vue';
 import ArticleCardContainer from './components/ArticleCardContainer.vue';
 
-// variable that controls the which component the user sees
-const viewPosition = ref(0)
-const hideLogo = ref(false)
-const articleCover = ref('...')
-const setViewPosition = (pos: number, coverPath: string) => {
-  if (pos === 4) {
+const userPosition = ref(0) // controls which component the user sees
+const hideLogo = ref(false) // controls the logo
+const articleCover = ref('...') // sets the article cover that is expanded
+const setUserPosition = (pos: number, coverPath: string) => {
+  if (pos === UserPosition.ExpandedArticle) {
     hideLogo.value = true
     articleCover.value = coverPath
   }
-  viewPosition.value = pos;
+  userPosition.value = pos;
 }
-</script>
 
-<template>
-  <NavBar 
-    :view-position="viewPosition"
-    :hide-logo="hideLogo"
-    :article-cover="articleCover"
-    @set-position="setViewPosition"
-  />
-  <ArticleCardContainer
-    @set-position="setViewPosition"
-  />
-</template>
+const viewControllers: ViewControllerInterface = {
+  userPosition: userPosition,
+  setUserPosition: setUserPosition
+}
+
+provide(viewControllerKey, viewControllers)
+</script>
 
 <style lang="scss">
 @font-face {

@@ -3,21 +3,43 @@
     <h1 v-if="!hideLogo" class="logo-text m-0">Opinionline</h1>
     <img v-else :src="articleCover" alt="article-cover">
     <div class="menu-container w-100">
-      <button class="light-green-bg" :class="{'selected-button': viewPosition === 0}" type="button" @click="$emit('set-position', ViewPosition.Initial)">Inicio</button>
-      <button class="light-green-bg" :class="{'selected-button': viewPosition === 1}" type="button" @click="$emit('set-position', ViewPosition.Category)">Categorias</button>
-      <button class="light-green-bg" :class="{'selected-button': viewPosition === 2}" type="button" @click="$emit('set-position', ViewPosition.About)">Sobre</button>
-      <button class="light-green-bg" :class="{'selected-button': viewPosition === 3}" type="button" @click="$emit('set-position', ViewPosition.Contact)">Contato</button>
+      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 0}" type="button" @click="controls.setUserPosition(UserPosition.Initial, '')">Inicio</button>
+      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 1}" type="button" @click="controls.setUserPosition(UserPosition.Category, '')">Categorias</button>
+      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 2}" type="button" @click="controls.setUserPosition(UserPosition.About, '')">Sobre</button>
+      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 3}" type="button" @click="controls.setUserPosition(UserPosition.Contact, '')">Contato</button>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { ViewPosition } from '../utils/types';
+import { inject, onMounted, ref } from 'vue';
+import { UserPosition, ViewControllerInterface } from '../utils/types';
+import { viewControllerKey } from '../utils/keys';
   defineProps<{
-    viewPosition: number
     hideLogo: boolean
     articleCover: string
   }>()
+  const unwrapControllerProvider = () => {
+    const x = inject<ViewControllerInterface>(viewControllerKey)
+    if (x) {
+      return x
+    }
+    const y: ViewControllerInterface = {
+      userPosition: ref(0),
+      setUserPosition: () => {}
+    }
+    return y
+  }
+  // let controls: ViewControllerInterface = {
+  //   userPosition: 0,
+  //   setUserPosition: () => {
+  //     console.log('lel')
+  //   }
+  // }
+  // onMounted(() => {
+  //   controls = unwrapControllerProvider()
+  // })
+  const controls = unwrapControllerProvider()
 </script>
 
 <style scoped lang="scss">

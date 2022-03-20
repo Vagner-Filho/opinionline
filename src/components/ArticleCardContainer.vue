@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue';
+import { UserPosition } from '../utils/types';
 import ArticleCard from './ArticleCard.vue';
 import ExpandedArticle from './ExpandedArticle.vue';
-import { ViewPosition } from '../utils/types';
 
 const articles = reactive([
   {
@@ -39,7 +39,7 @@ const switchView = () => {
   isInMostActual.value = !isInMostActual.value
 }
 const mostReadOrMostActual = computed(() => {
-  return isInMostActual.value ? 'Mais lidos' : 'Mais atuais'
+  return isInMostActual.value ? 'Mais atuais' : 'Mais lidos'
 })
 
 const expandingArticle = ref(false) // indicates to the reader that the chosen article is loading
@@ -62,9 +62,13 @@ const expandArticle = (id: number, coverPath: string) => {
   setTimeout(() => {
     expandingArticle.value = false
     articleExpanded.value = true
-    emit('set-position', ViewPosition.ExpandedArticle, coverPath)
+    emit('set-position', UserPosition.ExpandedArticle, coverPath)
   }, 2000);
 }
+
+const props = defineProps<{
+  userPosition: number
+}>()
 </script>
 
 <style scoped lang="scss">
