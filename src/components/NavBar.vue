@@ -1,4 +1,5 @@
 <template>
+<header id="navbar">
   <nav>
     <h1 v-if="!hideLogo" class="logo-text m-0">Opinionline</h1>
     <img v-else :src="articleCover" alt="article-cover">
@@ -9,10 +10,11 @@
       <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 3}" type="button" @click="controls.setUserPosition(UserPosition.Contact, '')">Contato</button>
     </div>
   </nav>
+</header>
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, ref } from 'vue';
+import { inject, ref } from 'vue';
 import { UserPosition, ViewControllerInterface } from '../utils/types';
 import { viewControllerKey } from '../utils/keys';
   defineProps<{
@@ -26,7 +28,7 @@ import { viewControllerKey } from '../utils/keys';
     }
     const y: ViewControllerInterface = {
       userPosition: ref(0),
-      setUserPosition: () => {}
+      setUserPosition: () => {} // FIXME: find a better way to handle it
     }
     return y
   }
@@ -43,16 +45,20 @@ import { viewControllerKey } from '../utils/keys';
 </script>
 
 <style scoped lang="scss">
-  nav {
-    width: 100vw;
-    top: -8px;
-    left: -8px;
+  header#navbar {
     position: relative;
-    max-width: 1920px;
-    img {
-      width: 100%
+    nav {
+      width: 100%;
+      top: -8px;
+      left: -8px;
+      /* position: relative; */
+      max-width: 1920px;
+      img {
+        width: 100%
+      }
     }
   }
+
   .menu-container {
     display: inline-flex;
     justify-content: space-evenly;
