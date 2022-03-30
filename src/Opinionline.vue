@@ -4,20 +4,24 @@
     :article-cover="articleCover"
     @set-position="setUserPosition"
   />
+  
   <ArticleCardContainer
+    v-show="showArticleCardContainer"
     :user-position="userPosition"
     @set-position="setUserPosition"
   />
+  <About v-show="userPosition === UserPosition.About"/>
 </template>
 
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { provide, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import { UserPosition, ViewControllerInterface } from './utils/types';
 import { viewControllerKey } from './utils/keys';
 import NavBar from './components/NavBar.vue';
 import ArticleCardContainer from './components/ArticleCardContainer.vue';
+import About from './components/About.vue'
 
 const userPosition = ref(0) // controls which component the user sees
 const hideLogo = ref(false) // controls the logo
@@ -36,6 +40,10 @@ const viewControllers: ViewControllerInterface = {
 }
 
 provide(viewControllerKey, viewControllers)
+
+const showArticleCardContainer = computed(() => {
+  return (userPosition.value === UserPosition.Contact || userPosition.value === UserPosition.About) ? false : true;
+})
 </script>
 
 <style lang="scss">
@@ -46,6 +54,9 @@ provide(viewControllerKey, viewControllers)
 @font-face {
   font-family: "Josefin-Sans";
   src: url(/src/assets/fonts/JosefinSans-VariableFont_wght.ttf);
+}
+body {
+  margin: 0;
 }
 #app {
   font-family: Josefin-Sans, Avenir, Helvetica, Arial, sans-serif;
@@ -115,4 +126,13 @@ provide(viewControllerKey, viewControllers)
       }
     }
   }
+.d-flex {
+  display: flex;
+}
+.f-to-column {
+  flex-direction: column;
+}
+.f-to-row {
+  flex-direction: row;
+}
 </style>
