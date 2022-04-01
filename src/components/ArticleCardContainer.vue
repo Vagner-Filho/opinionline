@@ -1,6 +1,6 @@
 <template>
   <main v-if="!expandingArticle && !articleExpanded" class="container">
-    <button type="button" @click="switchView()">{{ mostReadOrMostActual }}</button>
+    <button id="change-view-type" type="button" @click="switchView()">{{ mostReadOrMostActual }}</button>
     <ArticleCard v-for="(article, index) in articles" :key="index"
       :background-url="article.coverUlr"
       :article-id="index"

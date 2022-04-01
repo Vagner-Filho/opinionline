@@ -4,10 +4,10 @@
     <h1 v-if="!hideLogo" class="logo-text m-0">Opinionline</h1>
     <img v-else :src="articleCover" alt="article-cover">
     <div class="menu-container w-100">
-      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 0}" type="button" @click="controls.setUserPosition(UserPosition.Initial, '')">Inicio</button>
-      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 1}" type="button" @click="controls.setUserPosition(UserPosition.Category, '')">Categorias</button>
-      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 2}" type="button" @click="controls.setUserPosition(UserPosition.About, '')">Sobre</button>
-      <button class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 3}" type="button" @click="controls.setUserPosition(UserPosition.Contact, '')">Contato</button>
+      <button id="home" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 0}" type="button" @click="controls.setUserPosition(UserPosition.Initial, '')">Inicio</button>
+      <button id="categories" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 1}" type="button" @click="controls.setUserPosition(UserPosition.Category, '')">Categorias</button>
+      <button id="about" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 2}" type="button" @click="controls.setUserPosition(UserPosition.About, '')">Sobre</button>
+      <button id="contact" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 3}" type="button" @click="controls.setUserPosition(UserPosition.Contact, '')">Contato</button>
     </div>
   </nav>
 </header>
