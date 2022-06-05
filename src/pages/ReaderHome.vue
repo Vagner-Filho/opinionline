@@ -1,33 +1,46 @@
 <template>
-  <NavBar 
-    :hide-logo="hideLogo"
-    :article-cover="articleCover"
-  />
-  <!-- <NavBar 
-    :hide-logo="hideLogo"
-    :article-cover="articleCover"
-    @set-position="setUserPosition"
-  />
-  
   <ArticleCardContainer
     v-show="showArticleCardContainer"
     :user-position="userPosition"
     @set-position="setUserPosition"
   />
-  <About v-show="userPosition === UserPosition.About"/> -->
-  <router-view />
+  <About v-show="userPosition === UserPosition.About"/>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import NavBar from './components/NavBar.vue';
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import { computed, provide, ref } from 'vue';
+import { UserPosition, ViewControllerInterface } from '../utils/types';
+import { viewControllerKey } from '../utils/keys';
+import NavBar from '../components/NavBar.vue';
+import ArticleCardContainer from '../components/ArticleCardContainer.vue';
+import About from '../components/About.vue'
 
-const userPosition = ref(0)
-const hideLogo = ref(false)
-const articleCover = ref('...')
+const userPosition = ref(0) // controls which component the user sees
+const hideLogo = ref(false) // controls the logo
+const articleCover = ref('...') // sets the article cover that is expanded
+const setUserPosition = (pos: number, coverPath: string) => {
+  if (pos === UserPosition.ExpandedArticle) {
+    hideLogo.value = true
+    articleCover.value = coverPath
+  }
+  userPosition.value = pos;
+}
+
+const viewControllers: ViewControllerInterface = {
+  userPosition: userPosition,
+  setUserPosition: setUserPosition
+}
+
+provide(viewControllerKey, viewControllers)
+
+const showArticleCardContainer = computed(() => {
+  return (userPosition.value === UserPosition.Contact || userPosition.value === UserPosition.About) ? false : true;
+})
 </script>
 
-<style lang="scss">
+<!-- <style lang="scss">
 @font-face {
   font-family: "Great-Vibes";
   src: url(/src/assets/fonts/GreatVibes-Regular.ttf);
@@ -81,14 +94,6 @@ body {
 .highlight-green {
   background-color: #7FFC7C;
 }
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-  min-height: 300px;
-}
 .spinner {
   height: 100px;
   width: 100px;
@@ -124,4 +129,4 @@ body {
 .f-to-row {
   flex-direction: row;
 }
-</style>
+</style> -->

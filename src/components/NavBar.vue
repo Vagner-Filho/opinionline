@@ -4,44 +4,35 @@
     <h1 v-if="!hideLogo" class="logo-text m-0">Opinionline</h1>
     <img v-else :src="articleCover" alt="article-cover">
     <div class="menu-container w-100">
-      <button id="home" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 0}" type="button" @click="controls.setUserPosition(UserPosition.Initial, '')">Inicio</button>
-      <button id="categories" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 1}" type="button" @click="controls.setUserPosition(UserPosition.Category, '')">Categorias</button>
-      <button id="about" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 2}" type="button" @click="controls.setUserPosition(UserPosition.About, '')">Sobre</button>
-      <button id="contact" class="light-green-bg" :class="{'selected-button': controls.userPosition.value === 3}" type="button" @click="controls.setUserPosition(UserPosition.Contact, '')">Contato</button>
+      <button id="home" class="light-green-bg" :class="{'selected-button': actualUserPosition === UserPosition.Initial}" type="button" @click="goToSelected('ReaderHome', UserPosition.Initial)">Inicio</button>
+      <button id="categories" class="light-green-bg" :class="{'selected-button': actualUserPosition === UserPosition.Category}" type="button" @click="goToSelected('Category', UserPosition.Category)">Categorias</button>
+      <button id="about" class="light-green-bg" :class="{'selected-button': actualUserPosition === UserPosition.About}" type="button" @click="goToSelected('About', UserPosition.About)">Sobre</button>
+      <button id="contact" class="light-green-bg" :class="{'selected-button': actualUserPosition === UserPosition.Contact}" type="button" @click="goToSelected('Contact', UserPosition.Contact)">Contato</button>
     </div>
   </nav>
 </header>
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue';
-import { UserPosition, ViewControllerInterface } from '../utils/types';
-import { viewControllerKey } from '../utils/keys';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { UserPosition } from '../utils/types'
+
   defineProps<{
     hideLogo: boolean
     articleCover: string
   }>()
-  const unwrapControllerProvider = () => {
-    const x = inject<ViewControllerInterface>(viewControllerKey)
-    if (x) {
-      return x
-    }
-    const y: ViewControllerInterface = {
-      userPosition: ref(0),
-      setUserPosition: () => {} // FIXME: find a better way to handle it
-    }
-    return y
+
+  const router = useRouter()
+  const goToSelected = (routeName: string, currentUserPosition: UserPosition) => {
+    router.push({ name: routeName })
+    setActualUserPosition(currentUserPosition)
   }
-  // let controls: ViewControllerInterface = {
-  //   userPosition: 0,
-  //   setUserPosition: () => {
-  //     console.log('lel')
-  //   }
-  // }
-  // onMounted(() => {
-  //   controls = unwrapControllerProvider()
-  // })
-  const controls = unwrapControllerProvider()
+
+  const actualUserPosition = ref(0)
+  const setActualUserPosition = (currentUserPosition: UserPosition) => {
+    actualUserPosition.value = currentUserPosition
+  }
 </script>
 
 <style scoped lang="scss">

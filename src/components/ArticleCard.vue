@@ -1,5 +1,5 @@
 <template>
-  <section :id="'article-card' + articleId" class="article-card" @click="$emit('expand-article', articleId)">
+  <section :id="'article-card' + articleId" class="article-card" @click="$router.push({ name: 'ArticlePage', query: { id: articleId }})">
     <header>
       <div class="default-author-pic" />
     </header>

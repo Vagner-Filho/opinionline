@@ -7,11 +7,6 @@
       @expand-article="expandArticle(index, article.coverUlr)"
     />
   </main>
-  <main v-else-if="!expandingArticle && articleExpanded" class="container" id="expanded-article">
-    <ExpandedArticle 
-      :expanded-article="expandedArticle"
-    />
-  </main>
   <main v-else-if="expandingArticle && !articleExpanded" class="container">
     <div class="spinner">
       <div class="loader" />
