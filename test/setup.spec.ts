@@ -1,3 +1,4 @@
+/** @type {import('@jest/types')} */
 import SettingUp from '../components/SettingUp.vue'
 import { mount } from '@vue/test-utils'
 
