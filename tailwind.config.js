@@ -8,9 +8,15 @@ module.exports = {
     "./plugins/**/*.{js,ts}",
     "./nuxt.config.{js,ts}",
   ],
-  darkMode: false, // or 'media' or 'class'
+  media: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    fontFamily: {
+      'great-vibes': ['GreatVibes', 'sans-serif'],
+      'josefin-sans': ['JosefinSans', 'sans-serif'],
+    },
+    colors: {
+      'light-green': '#CCFFC8',
+    },
   },
   variants: {
     extend: {},

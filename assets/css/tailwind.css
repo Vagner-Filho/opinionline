@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .std-btn-shape {
+    @apply rounded-3xl border-0 drop-shadow-none transition hover:drop-shadow-xl duration-500 ease-in-out mx-1
+  }
+  .light-green-bg {
+    @apply bg-light-green
+  }
+  .navbar-btn {
+    @apply  font-josefin-sans w-1/4 h-8 text-sm sm:text-lg max-w-[200px]
+  }
+}
+
+@font-face {
+  font-family: 'GreatVibes';
+  src: url('../font/GreatVibes-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'JosefinSans';
+  src: url('../font/JosefinSans-VariableFont_wght.ttf');
+}
