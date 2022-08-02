@@ -1,8 +1,7 @@
 <template>
 <header id="navbar" class="relative px-2">
   <nav class="w-full">
-    <h1 v-if="!hideLogo" class="text-4xl text-center text-black font-great-vibes mt-5">Opinionline</h1>
-    <img v-else :src="articleCover" alt="article-cover" class="w-full">
+    <h1 class="text-4xl text-center text-black font-great-vibes mt-5">Opinionline</h1>
     <div class="flex justify-evenly my-7">
       <button id="home" class="std-btn-shape bg-light-green navbar-btn" type="button" :class="{ 'bg-light-gray text-gray': routeName === 'index' }">
         <NuxtLink to="/">Inicio</NuxtLink>
@@ -23,18 +22,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-  defineProps<{
-    hideLogo: boolean
-    articleCover: string
-  }>()
-
-  const route = useRoute()
-  const routeName = computed(() => route.name)
+const route = useRoute()
+const routeName = computed(() => route.name)
 
 </script>
-
-<style scoped>
-  .bom-dia {
-    background-color: black !important
-  }
-</style>
