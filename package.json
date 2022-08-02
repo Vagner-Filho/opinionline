@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@types/jest": "^28.1.4",
-    "@vue/test-utils": "^2.0.0-rc.18",
+    "@vue/test-utils": "^2.0.2",
     "@vue/vue3-jest": "28",
     "autoprefixer": "^10.4.7",
     "jest": "^28.1.2",

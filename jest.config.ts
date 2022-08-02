@@ -11,6 +11,9 @@ const config: Config.InitialOptions = {
   transform: {
     "\\.[jt]s?$": "ts-jest",
     "^.+\\.vue$": "@vue/vue3-jest" // Update to match your installed version
-  }
+  },
+  testEnvironmentOptions: {
+    customExportConditions: ["node", "node-addons"],
+  },
 };
 export default config;
