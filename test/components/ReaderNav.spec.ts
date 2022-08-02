@@ -1,4 +1,6 @@
 import { mount } from "@vue/test-utils";
+import { NuxtLink } from "../../.nuxt/components";
+import ReaderCategoriesFilter from "../../components/reader/CategoriesFilter.vue";
 import ReaderNavBar from "../../components/reader/NavBar.vue";
 
 jest.mock('vue-router', () => ({
@@ -9,22 +11,23 @@ jest.mock('vue-router', () => ({
 describe('Reader navigation bar', () => {
   const wrapper = mount(ReaderNavBar, {
     global: {
-      stubs: ['NuxtLink']
+      components: {
+        NuxtLink,
+        ReaderCategoriesFilter
+      }
     }
   })
   test('renders navigation options', () => {
-    // const expectedOptions = ['Início', 'Categorias', 'Sobre', 'Contato']
-    // const options = wrapper.findAll('button').map((button) => {
-    //   if (button.text() in expectedOptions) {
-    //     return button.text()
-    //   }
-    // })
-    // expect(options).toEqual(expect.arrayContaining(expectedOptions))
-    
-    const opt = wrapper.find('#categories')
-    expect(opt.text()).toBe('Categorias')
+    const expectedOptions = ['Início', 'Categorias', 'Sobre', 'Contato']
+    const options = wrapper.findAll('button').map((button) => {
+      if (button.element.childElementCount === 0) {
+        return button.text()
+      }
+      return button.element.firstChild.textContent
+    })
+
+    expect(options).toEqual(expect.arrayContaining(expectedOptions))
   })
-  test('opens category drop down', () => {})
   test('redirect user on click', () => {})
   test('current nav option gets gray bg', () => {})
 })
