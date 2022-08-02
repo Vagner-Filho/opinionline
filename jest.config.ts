@@ -6,6 +6,7 @@ const config: Config.InitialOptions = {
   coverageDirectory: "coverage",
   testEnvironment: "jsdom",
   extensionsToTreatAsEsm: [".ts"],
+  moduleFileExtensions: ['js', 'mjs', 'cjs', 'jsx', 'ts', 'tsx', 'json', 'node', 'd.ts'],
   rootDir: './test/components',
   transform: {
     "\\.[jt]s?$": "ts-jest",
