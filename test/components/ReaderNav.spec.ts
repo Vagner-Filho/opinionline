@@ -28,6 +28,7 @@ describe('Reader navigation bar', () => {
 
     expect(options).toEqual(expect.arrayContaining(expectedOptions))
   })
-  test('redirect user on click', () => {})
-  test('current nav option gets gray bg', () => {})
+  test('current nav option gets gray bg', () => {
+    expect(wrapper.find('#home').classes()).toContain('bg-light-gray')
+  })
 })
