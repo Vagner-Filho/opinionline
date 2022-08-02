@@ -5,6 +5,7 @@
       article-cover="https://picsum.photos/id/1/1920/1080"
     />
   </div>
+  <NuxtLink to="/exp">Experiment</NuxtLink>
   <NuxtPage />
 </template>
 
