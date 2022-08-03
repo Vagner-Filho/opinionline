@@ -39,10 +39,10 @@ describe('Categories Filter', () => {
     expect(renderedCategories).toEqual(expect.arrayContaining(expectedCategories))
   })
   test('emits chosen categories', async () => {
-    await wrapper.find('#category-id-1').trigger('select')
-    await wrapper.find('#category-id-2').trigger('select')
+    await wrapper.find('#category-id-1').trigger('click')
+    await wrapper.find('#category-id-2').trigger('click')
 
     expect(wrapper.emitted()).toHaveProperty('checked')
-    expect(wrapper.emitted().checked[1]).toEqual(mockCategoriesFilter)
+    expect(wrapper.emitted().checked[1][0]).toEqual(mockCategoriesFilter)
   })
 })

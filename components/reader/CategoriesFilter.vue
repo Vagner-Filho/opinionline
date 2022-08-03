@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, reactive, h, render } from 'vue'
+import { ref, h, render } from 'vue'
 // import type { Ref } from 'vue';
 
 const props = defineProps<{
@@ -14,9 +14,9 @@ interface ICategory {
   categoryId: number,
   categoryName: string
 }
-const checkedCategories = reactive<Array<ICategory>>([])
+const checkedCategories = ref<Array<ICategory>>([])
 const emit = defineEmits<{
-  (e: 'checked', args: ICategory[]): void
+  (e: 'checked', args: Array<ICategory>): void
 }>()
 function renderUlOptions() {
   return h(
@@ -43,12 +43,16 @@ function renderUlOptions() {
           h(
             'input',
             {
-              modelValue: checkedCategories,
               id: 'category-id-' + cat.categoryId,
               value: cat,
               type: 'checkbox',
-              onSelect: () => {
-                emit('checked', checkedCategories)
+              onClick: () => {
+                if (!checkedCategories.value.find(v => v.categoryId === cat.categoryId)) {
+                  checkedCategories.value.push(cat)
+                } else {
+                  checkedCategories.value = checkedCategories.value.filter(v => v.categoryId !== cat.categoryId)
+                }
+                emit('checked', checkedCategories.value)
               }
             }
           )
