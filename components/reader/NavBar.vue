@@ -6,7 +6,18 @@
       <button id="home" class="std-btn-shape bg-light-green navbar-btn" type="button" :class="{ 'bg-light-gray text-gray': routeName === 'index' }">
         <NuxtLink to="/">Início</NuxtLink>
       </button>
-      <CategoriesFilter />
+      <CategoriesFilter
+        :categories-filter="[
+          {
+            categoryId: 1,
+            categoryName: 'Esporte'
+          },
+          {
+            categoryId: 2,
+            categoryName: 'Games'
+          }
+        ]"
+      />
       <button id="about" class="std-btn-shape bg-light-green navbar-btn" type="button" :class="{ 'bg-light-gray text-gray': routeName === 'about' }">
         <NuxtLink to="/about">Sobre</NuxtLink>
       </button>
