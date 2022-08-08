@@ -1,6 +1,6 @@
 import ArticleCard from '../../components/reader/ArticleCard.vue';
 import { useRouter } from 'vue-router';
-import { shallowMount } from '@vue/test-utils';
+import { DOMWrapper, shallowMount } from '@vue/test-utils';
 
 describe('ArticleCard', () => {
   const wrapper = shallowMount(ArticleCard, {
@@ -8,6 +8,7 @@ describe('ArticleCard', () => {
       article: {
         title: 'test title',
         cover: 'cover path',
+        defaultCover: 'default public cover',
         authorPic: 'pic path',
         preview: 'article preview',
         releaseDate: '20/08/1999',
@@ -22,6 +23,21 @@ describe('ArticleCard', () => {
   })
   test('renders cover', () => {
     expect(wrapper.find('header').find('img').attributes('src')).toEqual('cover path');
+  })
+  test('renders default when cover missing', async () => {
+    await wrapper.setProps({
+      article: {
+        title: 'test title',
+        cover: '',
+        defaultCover: 'default public cover',
+        authorPic: 'pic path',
+        preview: 'article preview',
+        releaseDate: '20/08/1999',
+        id: 13
+      }
+    })
+    expect(wrapper.find('#cover')).not.toBe(DOMWrapper);
+    expect(wrapper.find('img').attributes('src')).toEqual('default public cover');
   })
   test('renders title', () => {
     expect(wrapper.find('h1').text()).toEqual('test title');

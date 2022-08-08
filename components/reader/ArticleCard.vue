@@ -1,7 +1,8 @@
 <template>
   <section class="rounded-lg drop-shadow-lg" @click="$emit('articleClicked', article.id)">
     <header class="relative">
-      <img :src="article.cover" id="cover" alt="">
+      <img v-if="!article.cover" :src="article.defaultCover" id="default-cover" alt="default article cover">
+      <img v-else :src="article.cover" id="cover" :alt="article.title + ' cover'">
       <div class="absolute">
         <img id="author-pic" :src="article.authorPic" alt="foto do(a) autor(a)">
       </div>
@@ -20,6 +21,7 @@
   interface IArticle {
     title: string;
     cover: string;
+    defaultCover: string;
     authorPic: string;
     preview: string;
     releaseDate: string;
