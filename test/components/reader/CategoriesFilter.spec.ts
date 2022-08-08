@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { computed, h, ref, render } from 'vue'
-import ReaderCategoriesFilter from "../../components/reader/CategoriesFilter.vue";
+import ReaderCategoriesFilter from "../../../components/reader/CategoriesFilter.vue";
 describe('Categories Filter', () => {
   const mockCategoriesFilter = [
     {

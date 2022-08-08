@@ -1,4 +1,4 @@
-import HomeStateIndicator from '../../components/reader/HomeStateIndicator.vue';
+import HomeStateIndicator from '../../../components/reader/HomeStateIndicator.vue';
 import { shallowMount } from '@vue/test-utils'; 
 
 describe('Home Indicator', () => {

@@ -1,0 +1,5 @@
+describe('ArticleCover', () => {
+  test('', () => {
+
+  });
+});

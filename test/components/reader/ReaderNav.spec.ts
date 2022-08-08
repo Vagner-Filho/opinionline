@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
-import { NuxtLink } from "../../.nuxt/components";
-import ReaderCategoriesFilter from "../../components/reader/CategoriesFilter.vue";
-import ReaderNavBar from "../../components/reader/NavBar.vue";
+import { NuxtLink } from "../../../.nuxt/components";
+import ReaderCategoriesFilter from "../../../components/reader/CategoriesFilter.vue";
+import ReaderNavBar from "../../../components/reader/NavBar.vue";
 
 jest.mock('vue-router', () => ({
   useRoute: jest.fn(() => { return { name: 'index' } }),

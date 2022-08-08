@@ -1,4 +1,4 @@
-import LoadingIndicator from '../../components/LoadingIndicator.vue'
+import LoadingIndicator from '../../../components/LoadingIndicator.vue'
 import { shallowMount } from '@vue/test-utils'
 
 describe('Loading Indicator', () => {

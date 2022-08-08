@@ -1,4 +1,4 @@
-import ArticleCard from '../../components/reader/ArticleCard.vue';
+import ArticleCard from '../../../components/reader/ArticleCard.vue';
 import { useRouter } from 'vue-router';
 import { DOMWrapper, shallowMount } from '@vue/test-utils';
 
