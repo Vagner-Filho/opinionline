@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { NuxtLink } from "../../../.nuxt/components";
-import ReaderCategoriesFilter from "../../../components/reader/CategoriesFilter.vue";
+import SelectFilter from "../../../components/SelectFilter.vue";
 import ReaderNavBar from "../../../components/reader/NavBar.vue";
 
 jest.mock('vue-router', () => ({
@@ -13,7 +13,7 @@ describe('Reader navigation bar', () => {
     global: {
       components: {
         NuxtLink,
-        ReaderCategoriesFilter
+        SelectFilter
       }
     }
   })

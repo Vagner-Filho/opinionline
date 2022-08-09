@@ -1,20 +1,22 @@
 import { mount } from '@vue/test-utils'
 import { computed, h, ref, render } from 'vue'
-import ReaderCategoriesFilter from "../../../components/reader/CategoriesFilter.vue";
-describe('Categories Filter', () => {
-  const mockCategoriesFilter = [
+import SelectFilter from "../../components/SelectFilter.vue";
+describe('Select Filter', () => {
+  const mockItemsFilter = [
     {
-      categoryId: 1,
-      categoryName: 'Cat 1'
+      itemId: 1,
+      itemName: 'Cat 1'
     },
     {
-      categoryId: 2,
-      categoryName: 'Cat 2'
+      itemId: 2,
+      itemName: 'Cat 2'
     }
   ]
-  const wrapper = mount(ReaderCategoriesFilter, {
+  const wrapper = mount(SelectFilter, {
     props: {
-      categoriesFilter: mockCategoriesFilter
+      itemsFilter: mockItemsFilter,
+      filterId: 'categories',
+      filterName: 'Categorias'
     },
     global: {
       mocks: {
@@ -31,18 +33,18 @@ describe('Categories Filter', () => {
     const btn = wrapper.find('button')
     expect(btn.classes()).toContain('bg-light-gray')
   })
-  test('renders categories by props', async () => {
+  test('renders items by props', async () => {
     const expectedCategories = ['Cat 1', 'Cat 2']
     await wrapper.trigger('click')
     
     const renderedCategories = wrapper.findAll('label').map((lb) => lb.text())
     expect(renderedCategories).toEqual(expect.arrayContaining(expectedCategories))
   })
-  test('emits chosen categories', async () => {
-    await wrapper.find('#category-id-1').trigger('click')
-    await wrapper.find('#category-id-2').trigger('click')
+  test('emits chosen items', async () => {
+    await wrapper.find('#item-id-1').trigger('click')
+    await wrapper.find('#item-id-2').trigger('click')
 
     expect(wrapper.emitted()).toHaveProperty('checked')
-    expect(wrapper.emitted().checked[1][0]).toEqual(mockCategoriesFilter)
+    expect(wrapper.emitted().checked[1][0]).toEqual(mockItemsFilter)
   })
 })

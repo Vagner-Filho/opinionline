@@ -6,17 +6,19 @@
       <button id="home" class="std-btn-shape bg-light-green navbar-btn" type="button" :class="{ 'bg-light-gray text-gray': routeName === 'index' }">
         <NuxtLink to="/">Início</NuxtLink>
       </button>
-      <CategoriesFilter
-        :categories-filter="[
+      <SelectFilter
+        :items-filter="[
           {
-            categoryId: 1,
-            categoryName: 'Esporte'
+            itemId: 1,
+            itemName: 'Esporte'
           },
           {
-            categoryId: 2,
-            categoryName: 'Games'
+            itemId: 2,
+            itemName: 'Games'
           }
         ]"
+        :filter-id="'categories'"
+        :filter-name="'Categorias'"
       />
       <button id="about" class="std-btn-shape bg-light-green navbar-btn" type="button" :class="{ 'bg-light-gray text-gray': routeName === 'about' }">
         <NuxtLink to="/about">Sobre</NuxtLink>
@@ -32,7 +34,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import CategoriesFilter from './CategoriesFilter.vue';
 
 const route = useRoute()
 const routeName = computed(() => route.name)
