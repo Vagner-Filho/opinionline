@@ -1,11 +1,12 @@
 <template>
-  <div id="category-tag">
+  <div :id="tagId">
     {{ tagName }}
   </div>
 </template>
 
 <script setup lang="ts">
   defineProps<{
-    tagName: string
+    tagName: string,
+    tagId: string
   }>();
 </script>
