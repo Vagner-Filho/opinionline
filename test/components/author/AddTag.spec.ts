@@ -8,16 +8,16 @@ describe('NewTag', () => {
     }
   })
   test('validate tag name', async () => {
-    await wrapper.setData({ tagNameInput: null })
-    await wrapper.find('button').trigger('click')
+    await wrapper.find('input').setValue(null)
+    await wrapper.find('form').trigger('submit')
     expect(wrapper.emitted()).toHaveProperty('invalid')
-    expect(wrapper.emitted().invalid[0]).toEqual('Nome da tag inválido')
+    expect(wrapper.emitted().invalid[0][0]).toEqual('Nome da tag inválido')
   })
   test('emit inputed tag name', async () => {
-    await wrapper.setData({ tagNameInput: 'tag name' })
-    await wrapper.find('button').trigger('click')
+    await wrapper.find('input').setValue('tag name')
+    await wrapper.find('form').trigger('submit')
     expect(wrapper.emitted()).toHaveProperty('tag')
-    expect(wrapper.emitted()[0][0]).toBe('tag name')
+    expect(wrapper.emitted().tag[0][0]).toBe('tag name')
   })
   test('emit destroy to hide self', async () => {
     await wrapper.find('#modal-back').trigger('click')
