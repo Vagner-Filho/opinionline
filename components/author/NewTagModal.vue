@@ -1,14 +1,15 @@
 <template>
-  <div id="modal-panel" v-if="isVisible" class="fixed h-full w-full bg-slate-600 opacity-5 flex justify-center items-center z-10" @click="destroySelf()">
-    <section id="new-tag" class="px-3 py-5 z-20">
+  <div id="modal-panel" v-if="isVisible" class="fixed top-0 left-0 h-screen w-screen z-10 flex justify-center content-center">
+    <div id="modal-back" class="h-screen w-screen fixed" @click="destroySelf()" />
+    <section id="new-tag" class="px-3 py-5 z-20 m-auto w-32 rounded-md drop-shadow-lg border-black">
       <main>
-        <form id="tag-name-form" class="flex-col" @sumbit.prevent="handleSubmit()">
+        <form id="tag-name-form" class="flex-col" @submit.prevent="handleSubmit()">
           <label for="tag-name-input">Nome da tag</label>
           <input id="tag-name-input" type="text" v-model="tagNameInput">
         </form>
       </main>
       <footer class="w-100">
-        <button type="submit" form="tag-name-form">Criar tag</button>
+        <button type="submit" form="tag-name-form" class="text-black">Criar tag</button>
       </footer>
     </section>
   </div>
@@ -27,6 +28,7 @@
 
   const emit = defineEmits<{
     (e: 'tag', tagName: string): void
+    (e: 'invalid', status: string): void
     (e: 'destroy'): void
   }>()
 
@@ -40,7 +42,7 @@
       emit('tag', tagNameInput.value)
     } else {
       // TODO: implement better warning
-      alert('Nome da tag inválido')
+      emit('invalid', 'Nome da tag inválido')
     }
   }
   const isValidTagInput = (tag: string) => {
