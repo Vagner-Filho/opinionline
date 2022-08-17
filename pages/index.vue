@@ -6,7 +6,7 @@
         <ReaderHomeStateIndicator />
       </header>
       <main class="flex flex-col pt-7">
-        <ReaderArticleCard v-for="(art, index) in articles" :key="index" :article="art" class="mb-6"/>
+        <ReaderArticleCard v-for="(art, index) in articles" :key="index" :article="art" class="mb-6" @articleClicked="handleClick"/>
       </main>
     </section>
   </div>
@@ -15,6 +15,13 @@
 <script setup lang="ts">
   import { getDatabase, ref as fbRef, onValue } from "firebase/database";
   import { ref, onMounted } from 'vue'
+
+  function handleClick(article) {
+    console.log(article);
+    const router = useRouter();
+    useState('expandedArticle', () => article);
+    router.push({ path: `article/${article.id}` })
+  }
 
   const articles = ref()
   onMounted(() => {
