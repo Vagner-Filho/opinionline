@@ -1,5 +1,5 @@
 <template>
-  <section class="rounded-md drop-shadow-md bg-[#F2F2F2] min-h-[270px] font-josefin-sans hover:drop-shadow-2xl" @click="$emit('articleClicked', article.id)">
+  <section class="rounded-md drop-shadow-md bg-[#F2F2F2] min-h-[270px] font-josefin-sans hover:drop-shadow-2xl" @click="$emit('articleClicked', { article })">
     <header class="relative">
       <div v-if="!article.cover" class="rounded-t-md h-20 bg-[url('/default/cover.svg')] bg-center bg-no-repeat bg-cover" id="default-cover" alt="default article cover" />
       <div v-else class="h-20" :src="article.cover" id="cover" :alt="article.title + ' cover'" />
@@ -25,7 +25,7 @@
     authorPic: string;
     text: string;
     releaseDate: string;
-    id: number;
+    id: string;
   }
   const props = defineProps<{
     article: IArticle;

@@ -1,15 +1,17 @@
 <template>
-  <ReaderNavBar
-    :is-reader="false"
-  />
-  <AuthorArticleForm
-    :titlePlaceholder="'Título'"
-    :isViewOnly="false"
-    :isLoadingData="false"
-    :coverPlaceholder="'Adicionar Capa'"
-    :articleTextPlaceholder="'Texto'"
-    @article="handleSubmit"
-  />
+  <div>
+    <ReaderNavBar
+      :is-reader="false"
+    />
+    <AuthorArticleForm
+      :titlePlaceholder="'Título'"
+      :isViewOnly="false"
+      :isLoadingData="false"
+      :coverPlaceholder="'Adicionar Capa'"
+      :articleTextPlaceholder="'Texto'"
+      @article="handleSubmit"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
