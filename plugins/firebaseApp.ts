@@ -1,17 +1,4 @@
-<template>
-  <div>
-    <ReaderNavBar
-      :hide-logo="false"
-      article-cover="https://picsum.photos/id/1/1920/1080"
-    />
-  </div>
-  <NuxtPage />
-</template>
-
-<script setup lang="ts">
 // import { initializeApp } from 'firebase/app';
-// import { provide } from 'vue';
-import './assets/css/tailwind.css';
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDsDGNI_nsTLccoc0qVYV3cGfv1TtJ6-KU",
@@ -24,12 +11,11 @@ import './assets/css/tailwind.css';
 // };
 
 // const app = initializeApp(firebaseConfig);
-// provide(firebaseAppKey(), app);
-</script>
 
-<style>
-  body {
-    max-width: 1536px;
-    margin: auto;
-  }
-</style>
+// export default defineNuxtPlugin((nuxtApp) => {
+//   return {
+//     provide: {
+//       firebaseApp: () => app
+//     }
+//   }
+// });

@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <span @click="handleClick($event)">Ver mais lidos</span>
+    <span @click="handleClick($event)" class="font-josefin-sans hover:cursor-pointer">Ver mais lidos</span>
   </nav>
 </template>
 
