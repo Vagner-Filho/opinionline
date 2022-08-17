@@ -7,7 +7,9 @@ const firebaseConfig = {
   storageBucket: "opinionline-77a42.appspot.com",
   messagingSenderId: "370890248236",
   appId: "1:370890248236:web:03c97fb2c02a5fbb99c189",
-  measurementId: "G-H7Z9WTPC0Q"
+  measurementId: "G-H7Z9WTPC0Q",
+  databaseURL: "https://opinionline-77a42-default-rtdb.firebaseio.com"
+
 };
 
 const app = initializeApp(firebaseConfig);
