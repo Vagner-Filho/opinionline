@@ -17,9 +17,7 @@
   import { ref, onMounted } from 'vue'
 
   function handleClick(article) {
-    console.log(article);
     const router = useRouter();
-    useState('expandedArticle', () => article);
     router.push({ path: `article/${article.id}` })
   }
 

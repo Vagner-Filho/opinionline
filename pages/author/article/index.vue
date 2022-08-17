@@ -18,7 +18,6 @@
   import { getDatabase, ref as fbRef, Database, push } from "firebase/database";
 
   function handleSubmit(articleData) {
-    console.log('1');
     const route = useRoute()
 
     const { $firebaseApp } = useNuxtApp()
@@ -33,7 +32,6 @@
   }
 
   async function createArticle(db: Database, articleData) {
-    console.log(articleData.title);
     const res = await push(fbRef(db, 'articles/'), {
       authorPic: false,
       cover: false,
@@ -42,7 +40,6 @@
       text: articleData.articleText,
       title: articleData.title
     })
-    console.log(res);
   }
   
   const coverInput = ref(null)
