@@ -1,13 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
-  content: [
-    "./components/**/*.{vue,js}",
-    "./layouts/**/*.vue",
-    "./pages/**/*.vue",
-    "./plugins/**/*.{js,ts}",
-  ],
-  media: false, // or 'media' or 'class'
+  content: [],
   theme: {
     fontFamily: {
       'great-vibes': ['GreatVibes', 'sans-serif'],
@@ -19,8 +12,5 @@ module.exports = {
       'gray': '#494949',
     },
   },
-  variants: {
-    extend: {},
-  },
   plugins: [],
-};
+}

@@ -2,13 +2,14 @@
   <ReaderNavBar
     :is-reader="false"
   />
-  <form class="max-w-4xl">
-    <AuthorArticleTitle
-      :is-view-only="false"
-    />
-  </form>
+  <AuthorArticleForm
+    :titlePlaceholder="'Título'"
+    :isViewOnly="false"
+    :isLoadingData="false"
+    :coverPlaceholder="'Adicionar Capa'"
+    :articleTextPlaceholder="'Texto'"
+  />
 </template>
 
 <script setup lang="ts">
-
 </script>

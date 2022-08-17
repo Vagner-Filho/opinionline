@@ -12,6 +12,9 @@
   .navbar-btn {
     @apply  font-josefin-sans w-1/4 h-8 text-sm sm:text-lg max-w-[200px]
   }
+  .std-author-input {
+    @apply px-4 border-[#D2D2D2] border-2 font-josefin-sans rounded-md drop-shadow-lg text-lg
+  }
 }
 
 @font-face {
