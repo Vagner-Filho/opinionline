@@ -4,7 +4,7 @@
     <label for="cover-input" class="std-author-input w-full h-14 leading-[3.5rem] text-[#9fa6b2] text-center mt-[90px] mb-1">{{ coverPlaceholder }}</label>
     <input ref="coverInput" type="file" id="cover-input" class="hidden" :disabled="isViewOnly">
     <textarea name="text" id="article-text" class="std-author-input py-4" v-model="articleData.articleText" cols="30" rows="10" :placeholder="articleTextPlaceholder" :disabled="isViewOnly" required></textarea>
-    <button class="std-btn-shape" type="submit">Publicar</button>
+    <button class="std-btn-shape bg-green-400 drop-shadow-md text-white text-lg h-7 w-fit px-4 m-auto my-2" type="submit">Publicar</button>
   </form>
 </template>
 

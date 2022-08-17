@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts">
+  import { User } from "firebase/auth";
   import { getDatabase, ref as fbRef, Database, push } from "firebase/database";
-
+  
   function handleSubmit(articleData) {
     const route = useRoute()
 
@@ -25,20 +26,25 @@
 
     if (route.query.isNew === '1') {
       // getCover()
-     createArticle(db, articleData)
+      createArticle(db, articleData)
     } else {
       // updateArticle()
     }
   }
 
-  async function createArticle(db: Database, articleData) {
-    const res = await push(fbRef(db, 'articles/'), {
+  function createArticle(db: Database, articleData) {
+    push(fbRef(db, 'articles/'), {
       authorPic: false,
       cover: false,
       preview: 'new inserted text',
       releaseDate: new Date().toLocaleDateString('pt-br'),
       text: articleData.articleText,
-      title: articleData.title
+      title: articleData.title,
+      authorId: useState<User>('user').value.uid
+    }).then((onfulfilled) => {
+      alert('Artigo criado com sucesso!')
+    }).catch((error) => {
+      console.error(error);
     })
   }
   
