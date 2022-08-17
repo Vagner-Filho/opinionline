@@ -9,10 +9,10 @@
           <input type="checkbox" :value="isPublished" @click="$emit('status', id)">
         </li>
         <li @click="$emit('edit', id)">
-          <img src="public/author/pencil.svg" alt="editar">
+          <img src="/author/pencil.svg" alt="editar">
         </li>
         <li @click="$emit('delete', id)">
-          <img src="public/author/trash.svg" alt="excluir">
+          <img src="/author/trash.svg" alt="excluir">
         </li>
       </ul>
     </nav>

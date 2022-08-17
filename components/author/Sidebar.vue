@@ -3,16 +3,16 @@
     <nav>
       <ul>
         <li class="profile" @click="$router.push({ name: 'author-profile'})">
-          <img src="/public/author/profile.svg" alt="perfil">
+          <img src="/author/profile.svg" alt="perfil">
         </li>
         <li class="home" @click="$router.push({ name: 'author-home'})">
-          <img src="/public/author/home.svg" alt="home">
+          <img src="/author/home.svg" alt="home">
         </li>
         <li class="create" @click="$router.push({ name: 'author-article', query: { isNew: '1' }})">
-          <img src="/public/author/plus.svg" alt="criar artigo">
+          <img src="/author/plus.svg" alt="criar artigo">
         </li>
         <li class="articles" @click="$router.push({ name: 'author-article', query: { isNew: '0' }})">
-          <img src="/public/author/open-book.svg" alt="ver artigos">
+          <img src="/author/open-book.svg" alt="ver artigos">
         </li>
       </ul>
     </nav>

@@ -17,7 +17,7 @@ describe('SideBar', () => {
   });
   test('renders nav options', () => {
     const navOptions = wrapper.findAll('img');
-    const optionsPublicPath = ['/public/author/profile.svg', '/public/author/home.svg', '/public/author/plus.svg', '/public/author/open-book.svg']
+    const optionsPublicPath = ['/author/profile.svg', '/author/home.svg', '/author/plus.svg', '/author/open-book.svg']
 
     for (const opt in navOptions) {
       expect(navOptions[opt].attributes('src')).toBe(optionsPublicPath[opt])

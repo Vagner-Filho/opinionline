@@ -3,9 +3,6 @@
   <header>
     <ReaderHomeStateIndicator />
   </header>
-  <main class="flex">
-
-  </main>
 </section>
 </template>
 
