@@ -5,8 +5,9 @@
         <li class="w-1/2" @click="$router.push({ name: 'author-article', query: { isViewOnly: '1', articleId: id }})">
           <h1 class="text-2xl truncate h-full leading-[3rem]">{{ title }}</h1>
         </li>
-        <li class="w-1/4 text-center leading-[3rem]">
-          <input type="checkbox" class="mr-8" :value="isPublished" @click="$emit('status', id)">
+        <li class="w-1/4 text-center flex items-center px-2">
+          <CustomLabel :is-label-for="'checkbox-' + articleId" :label-type="'checkbox'" />
+          <input type="checkbox" :id="'checkbox-' + articleId" class="hidden" :value="isPublished" @click="$emit('status', id)">
         </li>
         <li class="ml-auto flex items-center justify-end w-1/4">
           <img src="/author/pencil.svg" class="mr-4 w-full max-w-[21px]" alt="editar" @click="$emit('edit', id)">
@@ -18,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue'
   const articleId = computed(() => {
     return `article-${props.id}`
   })
