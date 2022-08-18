@@ -7,7 +7,7 @@
           Publicados e Salvos
         </h1>
       </header>
-      <main class="flex flex-col mt-5">
+      <main class="flex flex-col mt-5 px-2">
         <div class="ml-auto w-1/2 text-slate-400 text-sm">publicado</div>
         <AuthorArticleListed
           v-for="(art, index) in authorArticles"
@@ -15,6 +15,7 @@
           :title="art.title"
           :is-published="true"
           :id="art.id"
+          @edit="handleEdit"
           @delete="handleDelete"
         />
       </main>
@@ -33,5 +34,9 @@
   async function handleDelete(id: string) {
     await deleteArticle(id)
     authorArticles.value = await getArticles()
+  }
+  async function handleEdit(id: string) {
+    const router = useRouter()
+    router.push({ name: 'author-article', query: { isNew: '0', articleId: id } })
   }
 </script>

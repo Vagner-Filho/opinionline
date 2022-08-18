@@ -1,8 +1,8 @@
 <template>
   <div :id="articleId">
     <nav>
-      <ul class="flex h-12 w-full">
-        <li class="w-1/2" @click="$router.push({ name: 'author-article', query: { isNew: '0' }})">
+      <ul class="flex h-12 w-full border-b-2 border-black">
+        <li class="w-1/2" @click="$router.push({ name: 'author-article', query: { isViewOnly: '1', articleId: id }})">
           <h1 class="text-2xl truncate h-full leading-[3rem]">{{ title }}</h1>
         </li>
         <li class="w-1/4 text-center leading-[3rem]">

@@ -1,7 +1,7 @@
 <template>
 <header id="navbar" class="relative px-2">
   <nav class="w-full">
-    <button v-if="!isReader" class="absolute top-2 left-2" @click="sidebarIsVisible = true">
+    <button v-if="!isReader && $route.name !== 'auth'" class="absolute top-2 left-2" @click="sidebarIsVisible = true">
       <img src="/author/side-menu.svg" alt="menu lateral">
     </button>
       <AuthorSidebar v-if="sidebarIsVisible"/>

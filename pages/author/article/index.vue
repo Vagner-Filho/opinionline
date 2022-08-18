@@ -5,10 +5,11 @@
     />
     <AuthorArticleForm
       :titlePlaceholder="'Título'"
-      :isViewOnly="false"
+      :isViewOnly="$route.query.isViewOnly === '1'"
       :isLoadingData="false"
       :coverPlaceholder="'Adicionar Capa'"
       :articleTextPlaceholder="'Texto'"
+      :existing-article="existingArticle"
       @article="handleSubmit"
     />
   </div>
@@ -28,7 +29,7 @@
       // getCover()
       createArticle(db, articleData)
     } else {
-      // updateArticle()
+      updateArticle(db, articleData)
     }
   }
 
@@ -47,6 +48,7 @@
       console.error(error);
     })
   }
+  function updateArticle(db: Database, articleData) {}
   
   const coverInput = ref(null)
   // function getCover() {
@@ -62,4 +64,16 @@
   //   }
   //   reader.readAsDataURL(file);
   // }
+
+  const isLoadingData = ref(false)
+  const existingArticle = ref({})
+  onMounted(async() => {
+    const route = useRoute()
+    if (route.query.isNew === '0' || route.query.isViewOnly === '1') {
+      console.log('poxa')
+      isLoadingData.value = true
+      existingArticle.value = await getArticleFromId(route.query.articleId)
+      isLoadingData.value = false
+    }
+  })
 </script>
