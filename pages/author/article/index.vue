@@ -18,18 +18,15 @@
 
 <script setup lang="ts">
   import { User } from "firebase/auth";
-  import { getDatabase, ref as fbRef, Database, push } from "firebase/database";
+  import { ref as fbRef, set, Database, push } from "firebase/database";
   
   function handleSubmit(articleData) {
+    const db = getDb()
     const route = useRoute()
-
-    const { $firebaseApp } = useNuxtApp()
-    const db = getDatabase($firebaseApp())
-
     if (route.query.isNew === '1') {
       createArticle(db, articleData)
     } else {
-      updateArticle(db, articleData)
+      updateArticle(db, articleData, route.query.articleId.toString())
     }
   }
   function createArticle(db: Database, articleData) {
@@ -38,7 +35,7 @@
       cover: false,
       preview: 'new inserted text',
       releaseDate: new Date().toLocaleDateString('pt-br'),
-      text: articleData.articleText,
+      text: articleData.text,
       title: articleData.title,
       authorId: useState<User>('user').value.uid
     }).then((onfulfilled) => {
@@ -47,7 +44,21 @@
       console.error(error);
     })
   }
-  function updateArticle(db: Database, articleData) {}
+  function updateArticle(db: Database, articleData, articleId: string) {
+    set(fbRef(db, `articles/${articleId}`), {
+      authorPic: false,
+      cover: false,
+      preview: 'edited text',
+      releaseDate: new Date().toLocaleDateString('pt-br'),
+      text: articleData.text,
+      title: articleData.title,
+      authorId: useState<User>('user').value.uid
+    }).then((onfulfilled) => {
+      alert('Artigo atualizado com sucesso!')
+    }).catch((error) => {
+      console.error(error);
+    })
+  }
 
   const isLoadingData = ref(false)
   const existingArticle = ref({})

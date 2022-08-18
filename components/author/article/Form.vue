@@ -45,7 +45,6 @@
 
 
   watchEffect(() => {
-    const route = useRoute()
     if (props.existingArticle) {
       articleData.value.title = props.existingArticle.title
       articleData.value.text = props.existingArticle.text
