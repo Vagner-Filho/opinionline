@@ -1,18 +1,16 @@
 <template>
   <div :id="articleId">
     <nav>
-      <ul class="flex w-full">
+      <ul class="flex h-12 w-full">
         <li class="w-1/2" @click="$router.push({ name: 'author-article', query: { isNew: '0' }})">
-          <h3>{{ title }}</h3>
+          <h1 class="text-2xl truncate h-full leading-[3rem]">{{ title }}</h1>
         </li>
-        <li>
-          <input type="checkbox" :value="isPublished" @click="$emit('status', id)">
+        <li class="w-1/4 text-center leading-[3rem]">
+          <input type="checkbox" class="mr-8" :value="isPublished" @click="$emit('status', id)">
         </li>
-        <li @click="$emit('edit', id)">
-          <img src="/author/pencil.svg" alt="editar">
-        </li>
-        <li @click="$emit('delete', id)">
-          <img src="/author/trash.svg" alt="excluir">
+        <li class="ml-auto flex items-center justify-end w-1/4">
+          <img src="/author/pencil.svg" class="mr-4 w-full max-w-[21px]" alt="editar" @click="$emit('edit', id)">
+          <img src="/author/trash.svg" class="w-full max-w-[25px]" alt="excluir" @click="$emit('delete', id)">
         </li>
       </ul>
     </nav>
@@ -37,8 +35,8 @@
       required: true
     },
     id: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '',
       required: true
     }
   })

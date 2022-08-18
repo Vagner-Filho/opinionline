@@ -28,12 +28,7 @@
     const db = getDatabase($firebaseApp())
     const articlesRef = fbRef(db, 'articles');
     onValue(articlesRef, (snapshot) => {
-      const data = snapshot.val();
-      const keys = Object.keys(data);
-      articles.value = Object.values(data);
-      for (const k in keys) {
-        articles.value[k].id = keys[k]
-      }
+      articles.value = transformRawArticle(snapshot.val())
     })
   })
 </script>
