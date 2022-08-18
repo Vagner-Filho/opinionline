@@ -25,7 +25,6 @@ import './assets/css/tailwind.css';
 
 <style>
   body {
-    max-width: 1536px;
     margin: auto;
   }
 </style>

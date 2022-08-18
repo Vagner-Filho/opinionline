@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="max-w-4xl m-auto">
     <header>
       <ReaderNavBar :is-reader="true" />
     </header>
@@ -8,6 +8,7 @@
       <ReaderExpandedArticleInfo :author-pic="null" :release-date="fullArticle.releaseDate" :title="fullArticle.title" :tags="['teste']" />
       <ReaderExpandedArticleText :article-text="fullArticle.text" />
     </main>
+    <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
   </section>
 </template>
 
@@ -16,7 +17,9 @@
   import { onMounted, ref } from 'vue'
 
   onMounted(() => {
-    getFullArticle()
+    setTimeout(() => {
+      getFullArticle()
+    }, 2000);
   })
 
   const isLoadingData = ref(true)

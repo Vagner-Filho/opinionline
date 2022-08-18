@@ -1,13 +1,12 @@
 <template>
-  <div :id="loadingIndicatorId" v-if="isLoading">
-    <div class="loading-indicator">
-      <div class="animation" />
+  <div :id="loadingIndicatorId" v-if="isLoading" class="font-josefin-sans w-full text-center">
+    <div class="border-4 border-strong-green h-10 w-10 rounded-full m-auto">
+      <div class="w-6 z-20 h-3 bg-white origin-left animate-spin mt-3 ml-4" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { watchEffect } from 'vue';
   const props = defineProps({
     isLoading: {
       type: Boolean,
@@ -16,7 +15,7 @@ import { watchEffect } from 'vue';
     },
     loadingIndicatorId: {
       type: String,
-      required: true,
+      required: false,
       default: 'loading-indicator-0'  
     },
     loadingMessage: {
@@ -30,16 +29,12 @@ import { watchEffect } from 'vue';
     if (props.isLoading) {
       t = setTimeout(() => {
         const li = document.querySelector(`#${props.loadingIndicatorId}`)
-        const m = document.createElement('mark')
-        m.textContent = props.loadingMessage
-        li.append(m)
+        const s = document.createElement('span')
+        s.textContent = props.loadingMessage
+        li.append(s)
       }, 5000);
     } else {
       clearTimeout(t)
     }
   })
 </script>
-
-<style scoped>
-
-</style>

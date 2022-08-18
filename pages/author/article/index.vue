@@ -1,17 +1,18 @@
 <template>
-  <div>
+  <div class="max-w-4xl m-auto">
     <ReaderNavBar
       :is-reader="false"
     />
     <AuthorArticleForm
+      v-if="!isLoadingData"
       :titlePlaceholder="'Título'"
       :isViewOnly="$route.query.isViewOnly === '1'"
-      :isLoadingData="false"
       :coverPlaceholder="'Adicionar Capa'"
       :articleTextPlaceholder="'Texto'"
       :existing-article="existingArticle"
       @article="handleSubmit"
     />
+    <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
   </div>
 </template>
 
@@ -26,13 +27,11 @@
     const db = getDatabase($firebaseApp())
 
     if (route.query.isNew === '1') {
-      // getCover()
       createArticle(db, articleData)
     } else {
       updateArticle(db, articleData)
     }
   }
-
   function createArticle(db: Database, articleData) {
     push(fbRef(db, 'articles/'), {
       authorPic: false,
@@ -49,31 +48,27 @@
     })
   }
   function updateArticle(db: Database, articleData) {}
-  
-  const coverInput = ref(null)
-  // function getCover() {
-  //   if (!coverInput.value.files[0]) {
-  //     return null;
-  //   }
-  //   const lbl = document.querySelector('label');
-  //   lbl.textContent = 'Capa Carregada'
-  //   const file = coverInput.value.files[0]
-  //   const reader = new FileReader();
-  //   reader.onload = (e) => {
-  //     articleData.value.cover = e.target.result
-  //   }
-  //   reader.readAsDataURL(file);
-  // }
 
   const isLoadingData = ref(false)
   const existingArticle = ref({})
   onMounted(async() => {
     const route = useRoute()
     if (route.query.isNew === '0' || route.query.isViewOnly === '1') {
-      console.log('poxa')
       isLoadingData.value = true
       existingArticle.value = await getArticleFromId(route.query.articleId)
       isLoadingData.value = false
+    }
+  })
+
+  const route = useRoute()
+  watchEffect(() => {
+    if (route.query.isNew === '1') {
+      const defaultForm = {
+        title: '',
+        cover: false,
+        text: ''
+      }
+      existingArticle.value = { ...defaultForm }
     }
   })
 </script>
