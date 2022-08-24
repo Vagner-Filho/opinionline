@@ -20,6 +20,7 @@ interface IFilterItem {
 const checkedItems = ref<Array<IFilterItem>>([])
 const emit = defineEmits<{
   (e: 'checked', args: Array<IFilterItem>): void
+  (e: 'newtag'): void
 }>()
 function renderUlOptions() {
   return h(
@@ -52,6 +53,7 @@ function renderUlOptions() {
               class: i.itemId === 0 ? 'hidden' : '',
               type: 'checkbox',
               onClick: () => {
+                if (i.itemId === 0) return emit('newtag');
                 if (!checkedItems.value.find(v => v.itemId === i.itemId)) {
                   checkedItems.value.push(i)
                 } else {

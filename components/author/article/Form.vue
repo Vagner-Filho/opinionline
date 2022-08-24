@@ -5,12 +5,14 @@
       :items-filter="tags"
       :filter-id="'tag-selector'" 
       :filter-name="'+ Tag'"
+      @newtag="toggleNewTagModal"
       class="max-w-[80px] mt-3"
     /> 
     <label for="cover-input" class="std-author-input w-full h-14 leading-[3.5rem] text-[#9fa6b2] text-center mt-[90px] mb-1">{{ coverPlaceholder }}</label>
     <input ref="coverInput" type="file" id="cover-input" class="hidden" disabled>
     <textarea name="text" id="article-text" class="std-author-input py-4" v-model="articleData.text" cols="30" rows="10" :placeholder="articleTextPlaceholder" :disabled="isViewOnly" required></textarea>
     <button class="std-btn-shape bg-green-400 drop-shadow-md text-white text-lg h-7 w-fit px-4 m-auto my-2" type="submit" :disabled="isViewOnly">Publicar</button>
+    <AuthorNewTagModal :is-visible="newTagModalIsVisible" @destroy="toggleNewTagModal" />
   </form>
 </template>
 
@@ -55,7 +57,6 @@
     }
   ])
 
-
   watchEffect(() => {
     if (props.existingArticle) {
       articleData.value.title = props.existingArticle.title
@@ -63,5 +64,10 @@
       articleData.value.cover = props.existingArticle.cover
     }
   })
+
+  const newTagModalIsVisible = ref(false);
+  function toggleNewTagModal() {
+    newTagModalIsVisible.value = !newTagModalIsVisible.value;
+  }
   
 </script>
