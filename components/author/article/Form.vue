@@ -12,7 +12,7 @@
     <input ref="coverInput" type="file" id="cover-input" class="hidden" disabled>
     <textarea name="text" id="article-text" class="std-author-input py-4" v-model="articleData.text" cols="30" rows="10" :placeholder="articleTextPlaceholder" :disabled="isViewOnly" required></textarea>
     <button class="std-btn-shape bg-green-400 drop-shadow-md text-white text-lg h-7 w-fit px-4 m-auto my-2" type="submit" :disabled="isViewOnly">Publicar</button>
-    <AuthorNewTagModal :is-visible="newTagModalIsVisible" @destroy="toggleNewTagModal" />
+    <AuthorNewTagModal :is-visible="newTagModalIsVisible" @destroy="toggleNewTagModal" @tag="handleTag" />
   </form>
 </template>
 
@@ -68,6 +68,10 @@
   const newTagModalIsVisible = ref(false);
   function toggleNewTagModal() {
     newTagModalIsVisible.value = !newTagModalIsVisible.value;
+  }
+
+  function handleTag() {
+    // TODO: save tag to article on firebase
   }
   
 </script>
