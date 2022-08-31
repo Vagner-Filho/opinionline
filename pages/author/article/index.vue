@@ -11,6 +11,7 @@
       :articleTextPlaceholder="'Texto'"
       :existing-article="existingArticle"
       @article="handleSubmit"
+      @save="handleSave"
     />
     <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
   </div>
@@ -82,4 +83,16 @@
       existingArticle.value = { ...defaultForm }
     }
   })
+
+  function handleSave(articleData) {
+    const iDBReq = window.indexedDB.open('savedArticles', 1);
+
+    iDBReq.onerror = (e) => {
+      console.warn(e);
+    }
+
+    iDBReq.onsuccess = (e) => {
+      console.log(e);
+    }
+  }
 </script>

@@ -11,7 +11,11 @@
     <label for="cover-input" class="std-author-input w-full h-14 leading-[3.5rem] text-[#9fa6b2] text-center mt-[90px] mb-1">{{ coverPlaceholder }}</label>
     <input ref="coverInput" type="file" id="cover-input" class="hidden" disabled>
     <textarea name="text" id="article-text" class="std-author-input py-4" v-model="articleData.text" cols="30" rows="10" :placeholder="articleTextPlaceholder" :disabled="isViewOnly" required></textarea>
-    <button class="std-btn-shape bg-green-400 drop-shadow-md text-white text-lg h-7 w-fit px-4 m-auto my-2" type="submit" :disabled="isViewOnly">Publicar</button>
+    <div class="flex font-josefin-sans my-2">
+      <button class="std-btn-shape bg-light-gray drop-shadow-md text-gray text-lg w-28 px-4 h-8" type="submit" :disabled="isViewOnly">Cancelar</button>
+      <button class="std-btn-shape bg-green-400 drop-shadow-md text-white text-lg w-28 px-4 m-auto h-8" type="submit" :disabled="isViewOnly">Publicar</button>
+      <button class="std-btn-shape bg-white drop-shadow-md text-strong-green text-lg w-28 px-4 border-2 border-slate-200 h-8" type="button" @click="$emit('save', articleData)" :disabled="isViewOnly">Salvar</button>
+    </div>
     <AuthorNewTagModal :is-visible="newTagModalIsVisible" @destroy="toggleNewTagModal" @tag="handleTag" />
   </form>
 </template>
