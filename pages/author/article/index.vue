@@ -85,7 +85,7 @@
   })
 
   function handleSave(articleData) {
-    const iDBReq = window.indexedDB.open('opinionline', 1);
+    const iDBReq = window.indexedDB.open('opinionline');
 
     iDBReq.onerror = (e) => {
       console.warn(e);
@@ -100,7 +100,7 @@
       }
 
       const store = trans.objectStore('articles');
-      const req = store.add(articleData);
+      const req = store.add({ ...articleData, authorId: useState<User>('user').value.uid });
       req.onsuccess = (e) => {
         console.log('article sucessfully saved!');
       }
@@ -109,7 +109,7 @@
     iDBReq.onupgradeneeded = () => {
       const db = iDBReq.result;
       const store = db.createObjectStore('articles', { autoIncrement: true });
-      store.add(articleData);
+      store.add({ ...articleData, authorId: useState<User>('user').value.uid });
     }
   }
 </script>

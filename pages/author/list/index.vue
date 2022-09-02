@@ -30,6 +30,7 @@
   onMounted( async() => {
     isLoadingData.value = true;
     authorArticles.value = await getArticles()
+    getArticlesFromIndexedDB();
     isLoadingData.value = false;
   });
 
@@ -42,5 +43,21 @@
   async function handleEdit(id: string) {
     const router = useRouter()
     router.push({ name: 'author-article', query: { isNew: '0', articleId: id } })
+  }
+  function getArticlesFromIndexedDB() {
+    const iDBReq = window.indexedDB.open('opinionline');
+    
+    iDBReq.onsuccess = (e) => {
+      const db = iDBReq.result;
+      const trans = db.transaction('articles', 'readonly');
+      const store = trans.objectStore('articles');
+      const articles = store.getAll();
+      articles.onsuccess = (e) => {
+        console.log((e.target as IDBRequest).result);
+      }
+    }
+    iDBReq.onerror = (e) => {
+      console.warn(e);
+    }
   }
 </script>
