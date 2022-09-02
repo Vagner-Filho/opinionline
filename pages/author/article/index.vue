@@ -85,14 +85,31 @@
   })
 
   function handleSave(articleData) {
-    const iDBReq = window.indexedDB.open('savedArticles', 1);
+    const iDBReq = window.indexedDB.open('opinionline', 1);
 
     iDBReq.onerror = (e) => {
       console.warn(e);
     }
 
     iDBReq.onsuccess = (e) => {
-      console.log(e);
+      const db = iDBReq.result;
+      const trans = db.transaction('articles', 'readwrite');
+
+      trans.onerror = (e) => {
+        console.warn(e);
+      }
+
+      const store = trans.objectStore('articles');
+      const req = store.add(articleData);
+      req.onsuccess = (e) => {
+        console.log('article sucessfully saved!');
+      }
+    }
+
+    iDBReq.onupgradeneeded = () => {
+      const db = iDBReq.result;
+      const store = db.createObjectStore('articles', { autoIncrement: true });
+      store.add(articleData);
     }
   }
 </script>
