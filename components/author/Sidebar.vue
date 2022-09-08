@@ -2,7 +2,7 @@
   <div id="sidebar">
     <nav class="w-16 h-screen fixed left-0 top-0 bg-strong-green z-20">
       <ul>
-        <li class="my-4">
+        <li class="my-4 hover:cursor-pointer" @click="$router.push({ name: 'author-profile' })">
           <img class="m-auto" src="/author/profile.svg" alt="perfil">
         </li>
         <li class="my-4">

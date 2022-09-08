@@ -25,12 +25,20 @@
 </template>
 
 <script setup lang="ts">
+  
+
   const isLoadingData = ref(false);
-  const authorArticles = ref()
+  const authorArticles = ref([])
   onMounted( async() => {
     isLoadingData.value = true;
-    authorArticles.value = await getArticles()
-    getArticlesFromIndexedDB();
+    authorArticles.value = await getArticles();
+    const indexedArticles = getArticlesFromIndexedDB();
+    if (!(indexedArticles instanceof Error) && indexedArticles) {
+      console.log('oi ai')
+      authorArticles.value = authorArticles.value.concat(indexedArticles);
+    } else if(indexedArticles instanceof Error) {
+      console.error(indexedArticles.message);
+    }
     isLoadingData.value = false;
   });
 
@@ -47,17 +55,19 @@
   function getArticlesFromIndexedDB() {
     const iDBReq = window.indexedDB.open('opinionline');
     
+    let res;
     iDBReq.onsuccess = (e) => {
       const db = iDBReq.result;
       const trans = db.transaction('articles', 'readonly');
       const store = trans.objectStore('articles');
       const articles = store.getAll();
       articles.onsuccess = (e) => {
-        console.log((e.target as IDBRequest).result);
+        res = (e.target as IDBRequest).result;
       }
     }
     iDBReq.onerror = (e) => {
-      console.warn(e);
+      res = new Error(`error: ${e}`);
     }
+    return res;
   }
 </script>
