@@ -1,6 +1,5 @@
 <template>
   <div class="max-w-4xl m-auto">
-    <ReaderNavBar :is-reader="false" />
     <section class="font-josefin-sans mt-8">
       <header>
         <h1 class="text-center text-2xl">

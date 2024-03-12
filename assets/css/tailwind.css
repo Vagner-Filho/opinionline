@@ -4,19 +4,28 @@
 
 @layer components {
   .std-btn-shape {
-    @apply rounded-3xl border-0 drop-shadow-none transition hover:drop-shadow-xl duration-500 ease-in-out mx-1
+    @apply rounded-3xl border-0 ease-in-out
   }
-  .grow-shadow {
-    @apply transition hover:drop-shadow-2xl duration-500 ease-in-out
+  .shadow-hover {
+    @apply transition-shadow duration-500 ease-in-out hover:shadow-xl hover:dark:shadow-light-gray
   }
   .light-green-bg {
     @apply bg-light-green
   }
   .navbar-btn {
-    @apply  font-josefin-sans w-1/4 h-8 text-sm sm:text-lg max-w-[200px]
+    @apply font-josefin-sans w-1/4 h-8 text-sm md:text-lg max-w-[200px] !leading-9 text-center bg-light-green
+  }
+  .navbar-button-hover {
+    @apply hover:bg-strong-green hover:text-white transition-colors transform-gpu duration-500 ease-in-out
   }
   .std-author-input {
     @apply px-4 border-[#D2D2D2] border-2 font-josefin-sans rounded-md drop-shadow-lg text-lg
+  }
+}
+
+@layer base {
+  input, textarea {
+    @apply focus-visible:outline-strong-green appearance-none outline-none outline-offset-0
   }
 }
 

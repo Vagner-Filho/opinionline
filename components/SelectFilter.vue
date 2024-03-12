@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button :id="filterId" class="std-btn-shape mx-0 w-full bg-light-green navbar-btn relative" type="button" @click.prevent="toggleOptions($event)">{{ filterName }}</button>    
+  <div class="std-btn-shape bg-light-green navbar-btn">
+    <button :id="filterId" type="button" @click.prevent="toggleOptions($event)">{{ filterName }}</button>    
   </div>
 </template>
 

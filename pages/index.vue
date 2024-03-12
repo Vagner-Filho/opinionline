@@ -1,37 +1,72 @@
 <template>
   <div class="max-w-4xl m-auto">
-    <ReaderNavBar :is-reader="true" />
     <section class="px-2" v-if="!isLoadingData">
-      <header>
+      <header v-if="articles.length > 0">
         <ReaderHomeStateIndicator />
       </header>
-      <main class="flex flex-col pt-7">
+      <main class="flex flex-col pt-7" v-if="articles.length > 0">
         <ReaderArticleCard v-for="(art, index) in articles" :key="index" :article="art" class="mb-6" @articleClicked="handleClick"/>
       </main>
+      <main v-else>
+        No momento, nenhum artigo foi encontrado.
+      </main>
     </section>
-    <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
+    <Spinner v-else class="mt-32 mx-auto" />
+    <dialog id="takingTooLongDialog" ref="takingTooLongDialogRef">
+      <section class="border border-strong-green rounded-md p-3">
+        <header class="flex justify-end">
+          <button type="button" class="text-3xl" @click="takingTooLongDialogRef?.close()">X</button>
+        </header>
+        <main>
+          Desculpe pela demora inesperada. Aguarde mais pouco...
+        </main>
+        <footer>
+          <button type="button" @click="takingTooLongDialogRef?.close()">
+            OK
+          </button>
+        </footer>
+      </section>
+    </dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { getDatabase, ref as fbRef, onValue } from "firebase/database";
+import { getDatabase, ref as fbRef, onValue } from "firebase/database";
+import type { IArticle } from "~/core/entities";
 
-  function handleClick(article) {
+  function handleClick(article: IArticle) {
     const router = useRouter();
     router.push({ path: `article/${article.id}` })
   }
   
   const isLoadingData = ref(false);
-  const articles = ref();
+  const articles = ref([]);
+  const takingTooLongDialogRef = ref<HTMLDialogElement>();
   onMounted(() => {
-    isLoadingData.value = true
+    isLoadingData.value = true;
     const { $firebaseApp } = useNuxtApp()
-
     const db = getDatabase($firebaseApp())
     const articlesRef = fbRef(db, 'articles');
+
+    const stopSpinnerAfter10Seconds = setTimeout(() => {
+      isLoadingData.value = false;
+      articles.value = [];
+      clearTimeout(stopSpinnerAfter10Seconds);
+    }, 10000);
+
+    const takingTooLongTimeOut = setTimeout(() => {
+      if (takingTooLongDialogRef.value) {
+        takingTooLongDialogRef.value?.show()
+      }
+      clearTimeout(takingTooLongTimeOut);
+    }, 5000);
     onValue(articlesRef, (snapshot) => {
       articles.value = transformRawArticle(snapshot.val())
-      isLoadingData.value = false
+      isLoadingData.value = false;
+      clearTimeout(takingTooLongTimeOut);
+      clearTimeout(stopSpinnerAfter10Seconds);
+    }, (error) => {
+      console.log('error cb', error)
     })
   })
 </script>

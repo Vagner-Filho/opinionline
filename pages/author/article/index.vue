@@ -1,8 +1,5 @@
 <template>
   <div class="max-w-4xl m-auto">
-    <ReaderNavBar
-      :is-reader="false"
-    />
     <AuthorArticleForm
       v-if="!isLoadingData"
       :titlePlaceholder="'Título'"
@@ -18,10 +15,12 @@
 </template>
 
 <script setup lang="ts">
-  import { User } from "firebase/auth";
-  import { ref as fbRef, set, Database, push } from "firebase/database";
+import type { User } from "firebase/auth";
+import { ref as fbRef, set, Database, push } from "firebase/database";
+import { getStorage, uploadBytes, ref as fbStorageRef } from "firebase/storage";
+import type { ArticleData } from "~/components/author/article/types";
   
-  function handleSubmit(articleData) {
+  function handleSubmit(articleData: ArticleData) {
     const db = getDb()
     const route = useRoute()
     if (route.query.isNew === '1') {
@@ -30,12 +29,13 @@
       updateArticle(db, articleData, route.query.articleId.toString())
     }
   }
-  function createArticle(db: Database, articleData) {
+  async function createArticle(db: Database, articleData: ArticleData) {
+    const coverName = articleData.cover ? articleData.cover.name.toLowerCase().trim() : false;
     push(fbRef(db, 'articles/'), {
       authorPic: false,
-      cover: false,
+      cover: coverName,
       preview: 'new inserted text',
-      releaseDate: new Date().toLocaleDateString('pt-br'),
+      releaseDate: new Date().getTime(),
       text: articleData.text,
       title: articleData.title,
       authorId: useState<User>('user').value.uid
@@ -44,6 +44,18 @@
     }).catch((error) => {
       console.error(error);
     })
+
+    if (articleData.cover && coverName) {
+      const storage = getStorage();
+      const storageRef = fbStorageRef(storage, coverName);
+      uploadBytes(storageRef, articleData.cover)
+        .then((snapshot) => {
+          console.log('uploaded', snapshot)
+        })
+        .catch((err) => {
+          console.warn('error', err)
+        })
+    }
   }
   function updateArticle(db: Database, articleData, articleId: string) {
     set(fbRef(db, `articles/${articleId}`), {

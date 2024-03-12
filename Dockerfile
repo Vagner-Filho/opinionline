@@ -1,8 +1,0 @@
-FROM node
-WORKDIR /app
-ARG PORT=3000
-ENV PORT=$PORT
-EXPOSE $PORT
-COPY . .
-RUN yarn install
-ENTRYPOINT yarn dev

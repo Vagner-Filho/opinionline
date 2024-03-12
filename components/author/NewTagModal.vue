@@ -9,7 +9,7 @@
         </form>
       </main>
       <footer class="w-full text-center mt-4">
-        <button type="submit" form="tag-name-form" class="text-black std-btn-shape bg-light-green w-24 h-10 drop-shadow-md rounded-md">Criar tag</button>
+        <button type="submit" form="tag-name-form" class="std-btn-shape bg-light-green w-24 h-10 drop-shadow-md rounded-md">Criar tag</button>
       </footer>
     </section>
   </div>
