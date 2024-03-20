@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="max-w-4xl m-auto">
     <Title>Opinionline</Title>
+    <ReaderNavBar :is-reader="true" />
     <NuxtPage />
   </div>
 </template>
@@ -12,5 +13,10 @@ import './assets/css/tailwind.css';
 <style>
   body {
     margin: auto;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
   }
 </style>

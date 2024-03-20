@@ -1,4 +1,4 @@
-import { User } from "firebase/auth";
+import type { User } from "firebase/auth";
 import { ref as fbRef, get, query, equalTo, orderByChild, onValue } from "firebase/database";
 
 export default async function getArticles() {

@@ -1,10 +1,11 @@
 <template>
-  <button :id="filterId" class="std-btn-shape bg-light-green navbar-btn relative" type="button" @click.prevent="toggleOptions($event)">{{ filterName }}</button>
+  <div class="std-btn-shape bg-light-green navbar-btn">
+    <button :id="filterId" type="button" @click.prevent="toggleOptions($event)">{{ filterName }}</button>    
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, h, render } from 'vue'
-// import type { Ref } from 'vue';
 
 const props = defineProps<{
   itemsFilter: Array<IFilterItem>;
@@ -19,12 +20,13 @@ interface IFilterItem {
 const checkedItems = ref<Array<IFilterItem>>([])
 const emit = defineEmits<{
   (e: 'checked', args: Array<IFilterItem>): void
+  (e: 'newtag'): void
 }>()
 function renderUlOptions() {
   return h(
     'ul',
     {
-      class: 'absolute',
+      class: 'absolute max-w-40 w-full bg-light-gray rounded-md px-2 w-fit ml-2 font-josefin-sans',
       ref: 'optionsRef'
     },
     props.itemsFilter.map((i) => {
@@ -38,7 +40,8 @@ function renderUlOptions() {
           h(
             'label',
             {
-              for: 'item-id-' + i.itemId
+              for: 'item-id-' + i.itemId,
+              class: 'whitespace-nowrap max-w-[100px] overflow-hidden text-ellipsis mr-2 hover:cursor-pointer'
             },
             i.itemName
           ),
@@ -47,8 +50,10 @@ function renderUlOptions() {
             {
               id: 'item-id-' + i.itemId,
               value: i,
+              class: i.itemId === 0 ? 'hidden' : '',
               type: 'checkbox',
               onClick: () => {
+                if (i.itemId === 0) return emit('newtag');
                 if (!checkedItems.value.find(v => v.itemId === i.itemId)) {
                   checkedItems.value.push(i)
                 } else {
@@ -64,15 +69,15 @@ function renderUlOptions() {
   )
 }
 function toggleOptions(e: MouseEvent) {
-  const filterBtn = e.target as HTMLElement
-  if (filterBtn.childElementCount === 0) {
+  const filterBtn = e.target as HTMLElement;
+  const btnParent = filterBtn.parentElement;
+  if (btnParent.childElementCount === 1) {
     const ulOptions = renderUlOptions()
-    render(ulOptions, filterBtn)
+    render(ulOptions, btnParent)
   } else {
-    const optionsRef = filterBtn.querySelector('ul') as HTMLElement
+    const optionsRef = btnParent.querySelector('ul') as HTMLElement
     optionsRef.classList.toggle('hidden')
   }
   filterBtn.classList.toggle('bg-light-gray')
 }
-// const checkedItems: Ref<Array<IFilterItem>> = ref()
 </script>

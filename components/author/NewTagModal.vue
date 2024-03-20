@@ -1,15 +1,15 @@
 <template>
-  <div id="modal-panel" v-if="isVisible" class="fixed top-0 left-0 h-screen w-screen z-10 flex justify-center content-center">
-    <div id="modal-back" class="h-screen w-screen fixed" @click="destroySelf()" />
-    <section id="new-tag" class="px-3 py-5 z-20 m-auto w-32 rounded-md drop-shadow-lg border-black">
+  <div id="modal-panel" v-if="isVisible" class="fixed top-0 left-0 h-screen w-screen z-10 flex justify-center content-center font-josefin-sans">
+    <div id="modal-back" class="h-screen w-screen fixed bg-gray opacity-40" @click="destroySelf()" />
+    <section id="new-tag" class="px-3 py-5 z-20 m-auto w-[330px] rounded-md drop-shadow-lg border-black bg-white">
       <main>
         <form id="tag-name-form" class="flex-col" @submit.prevent="handleSubmit()">
-          <label for="tag-name-input">Nome da tag</label>
-          <input id="tag-name-input" type="text" v-model="tagNameInput">
+          <label for="tag-name-input" class="pl-5">Nome da tag</label>
+          <input class="std-author-input w-full" id="tag-name-input" type="text" v-model="tagNameInput">
         </form>
       </main>
-      <footer class="w-100">
-        <button type="submit" form="tag-name-form" class="text-black">Criar tag</button>
+      <footer class="w-full text-center mt-4">
+        <button type="submit" form="tag-name-form" class="std-btn-shape bg-light-green w-24 h-10 drop-shadow-md rounded-md">Criar tag</button>
       </footer>
     </section>
   </div>

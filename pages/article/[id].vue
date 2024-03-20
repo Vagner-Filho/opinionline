@@ -1,8 +1,5 @@
 <template>
   <section class="max-w-4xl m-auto">
-    <header>
-      <ReaderNavBar :is-reader="true" />
-    </header>
     <main class="px-2" v-if="!isLoadingData">
       <ReaderExpandedArticleCover :article-title="fullArticle.title" :cover-path="null" />
       <ReaderExpandedArticleInfo :author-pic="null" :release-date="fullArticle.releaseDate" :title="fullArticle.title" :tags="['teste']" />

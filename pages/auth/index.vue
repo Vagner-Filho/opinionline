@@ -1,18 +1,17 @@
 <template>
   <div>
-    <ReaderNavBar :is-reader="false"/>
-    <div class="bg-[#F2F2F2] font-josefin-sans w-[320px] mt-[112px] flex flex-col items-center h-[270px] m-auto rounded-md drop-shadow-lg">
-      <input class="w-[276px] h-[30px] mt-[44px] mb-[11px] bg-[#D2D2D2] rounded-md drop-shadow-2xl px-2" id="email" type="text" v-model="email" aria-placeholder="e-mail">
-      <input class="w-[276px] h-[30px] mb-[16px] bg-[#D2D2D2] rounded-md drop-shadow-2xl px-2" id="senha" type="password" v-model="pass" aria-placeholder="senha">
-      <button v-if="!isLoadingData" type="button" @click="logUser" class="my-2 bg-light-green rounded-md w-[65px] h-[42px] hover:drop-shadow-lg">Entrar</button>
-      <button v-if="!isLoadingData" type="button" @click="createUser" class="mb-[80px] bg-light-green rounded-md w-[90px] h-[42px] hover:drop-shadow-lg">Cadastrar</button>
+    <form class="shadow-contour shadow-strong-green font-josefin-sans w-[320px] mt-[112px] flex flex-col items-center h-[270px] m-auto rounded-md" @submit.prevent="logUser">
+      <input class="w-[276px] h-[30px] mt-[44px] mb-[11px] bg-[#D2D2D2] rounded-md px-2" id="email" type="text" v-model="email" aria-placeholder="e-mail" required>
+      <input class="w-[276px] h-[30px] mb-[16px] bg-[#D2D2D2] rounded-md px-2" id="senha" type="password" v-model="pass" aria-placeholder="senha" required>
+      <button v-if="!isLoadingData" type="submit" class="my-2 bg-strong-green text-white rounded-md w-[65px] h-[42px] hover:drop-shadow-lg">Entrar</button>
+      <button v-if="!isLoadingData" type="button" @click="createUser" class="mb-[80px] bg-strong-green text-white rounded-md w-[90px] h-[42px] hover:drop-shadow-lg">Cadastrar</button>
       <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
-    </div>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from 'firebase/auth';
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, type User } from 'firebase/auth';
   import { ref } from 'vue'
   const email = ref<string>('')
   const pass = ref<string>('')
