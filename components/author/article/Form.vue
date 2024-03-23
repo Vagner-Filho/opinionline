@@ -17,7 +17,7 @@
     <input ref="coverInput" type="file" id="cover-input" class="hidden" @change="handleFileChange" />
     <textarea name="text" id="article-text" class="std-author-input py-4" v-model="articleData.text" cols="30" rows="10" :placeholder="articleTextPlaceholder" :disabled="isViewOnly" required></textarea>
     <div class="flex font-josefin-sans my-2">
-      <button class="std-btn-shape bg-light-gray drop-shadow-md text-gray text-lg w-28 px-4 h-8" type="button" :disabled="isViewOnly">Cancelar</button>
+      <button class="std-btn-shape dark:bg-gray-500 bg-light-gray drop-shadow-md text-gray text-lg w-28 px-4 h-8" type="button" :disabled="isViewOnly">Cancelar</button>
       <button class="std-btn-shape bg-green-400 drop-shadow-md text-white text-lg w-28 px-4 m-auto h-8" type="submit" :disabled="isViewOnly">Publicar</button>
       <button class="std-btn-shape bg-white drop-shadow-md text-strong-green text-lg w-28 px-4 border-2 border-slate-200 h-8" type="button" @click="$emit('save', articleData)" :disabled="isViewOnly">Salvar</button>
     </div>
