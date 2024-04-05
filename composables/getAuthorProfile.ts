@@ -1,7 +1,7 @@
 
 import { ref as fbRef, get, query } from "firebase/database";
 
-export default async function getArticles() {
+export default async function getAuthorProfile() {
   const db = getDb()
   const dbRef = fbRef(db, 'about')
 
@@ -12,7 +12,7 @@ export default async function getArticles() {
     if (snapshot.exists()) {
       return snapshot.val()
     } else {
-      return Error('Failed to fetch articles')
+      return Error('Failed to fetch author profile')
     }
   }).catch((error) => {
     console.error(error);

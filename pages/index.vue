@@ -1,9 +1,9 @@
 <template>
   <div class="max-w-4xl m-auto">
     <section class="px-2" v-if="!isLoadingData">
-      <header v-if="articles.length > 0">
+      <!-- <header v-if="articles.length > 0">
         <ReaderHomeStateIndicator />
-      </header>
+      </header> -->
       <main class="flex flex-col pt-7" v-if="articles.length > 0">
         <ReaderArticleCard v-for="(art, index) in articles" :key="index" :article="art" class="mb-6" @articleClicked="handleClick"/>
       </main>

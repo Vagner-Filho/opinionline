@@ -11,18 +11,33 @@
           <AuthorPic :author-pic="authorPic" />
           <div class="text-2xl ml-3">Alterar Foto</div>
         </div>
-        <div class="my-2 flex flex-col">
-          <label class="text-2xl" for="about-author">Quem sou eu</label>
-          <textarea class="border-none p-2" v-model="aboutAuthor.data" name="about-author" id="about-author" cols="30" rows="10" @focusout="handleFocusOut(aboutAuthor)" />
-        </div>
-        <div class="my-2 flex flex-col">
-          <label class="text-2xl" for="about-opinionline">Sobre o Opinionline</label>
-          <textarea class="border-none p-2" v-model="aboutOpinionline.data" name="about-opinionline" id="about-opinionline" cols="30" rows="10" @focusout="handleFocusOut(aboutOpinionline)" />
-        </div>
-        <div class="my-2 flex flex-col">
-          <label class="text-2xl" for="contact-info">Informações de contato</label>
-          <textarea class="border-none p-2" v-model="contactInfo.data" name="contact-info" id="contact-info" cols="30" rows="10" @focusout="handleFocusOut(contactInfo)" />
-        </div>
+        <form @submit.prevent="handleSubmit" class="">
+          <div class="my-2 flex flex-col">
+            <label class="text-2xl px-2" for="author-name">Nome</label>
+            <input type="text" required id="author-name" class="border-none p-2 rounded-md dark:bg-neutral-800 bg-neutral-100 shadow-contour" name="name" />
+          </div>
+          <div class="my-2 flex flex-col">
+            <label class="text-2xl px-2" for="author-email">E-mail</label>
+            <input type="email" required id="author-email" class="border-none p-2 rounded-md dark:bg-neutral-800 bg-neutral-100 shadow-contour" name="email" />
+          </div>
+          <div class="my-2 flex flex-col">
+            <label class="text-2xl px-2" for="about-author">Quem sou eu</label>
+            <textarea required class="border-none p-2 rounded-md dark:bg-neutral-800 bg-neutral-100 shadow-contour" name="author" id="about-author" />
+          </div>
+          <div class="my-2 flex flex-col">
+            <label class="text-2xl px-2" for="about-opinionline">Sobre o Opinionline</label>
+            <textarea required class="border-none p-2 rounded-md dark:bg-neutral-800 bg-neutral-100 shadow-contour" name="opinionline" id="about-opinionline" />
+          </div>
+          <div class="my-2 flex flex-col">
+            <label class="text-2xl px-2" for="contact-info">Informações de contato</label>
+            <textarea required class="border-none p-2 rounded-md dark:bg-neutral-800 bg-neutral-100 shadow-contour" name="contact" id="contact-info" />
+          </div>
+          <div class="w-full text-center">
+            <button type="submit" class="std-btn-shape confirmation-btn">
+              Salvar
+            </button>
+          </div>
+        </form>
       </main>
       <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
     </section>
@@ -30,31 +45,59 @@
 </template>
 
 <script setup lang="ts">
-  import type { Ref } from 'vue';
+import { ProfileInfoKey, type ProfileInfo } from '~/composables/pushProfileInfo';
+
   const isLoadingData = ref(false);
 
-  interface IProfileInfo {
-    type: string,
-    data: string
+  const authorPic = ref('');
+  
+  type InputEl = HTMLInputElement & HTMLTextAreaElement;
+
+  interface ProfileInfoForm extends InputEl {
+    name: keyof ProfileInfo
   }
 
-  const authorPic = ref('');
-  const aboutAuthor: Ref<IProfileInfo> = ref({ type: 'aboutauthor', data: '' });
-  const aboutOpinionline: Ref<IProfileInfo> = ref({ type: 'aboutopinionline', data: '' });
-  const contactInfo: Ref<IProfileInfo> = ref({ type: 'contactinfo', data: '' });
+  const isProfileInfoForm = (value: any): value is ProfileInfoForm => {
+    return (
+      (value instanceof HTMLTextAreaElement || value instanceof HTMLInputElement)
+      && value.name in ProfileInfoKey
+    )
+  }
 
-
-  function handleFocusOut(profileInfo: IProfileInfo) {
-    console.log(profileInfo);
+  async function handleSubmit(ev: Event) {
+    const target = ev.target as HTMLFormElement;
+    if (target) {
+      const payload = Reflect.ownKeys(target).reduce((reduceTarget, currentValue) => {
+        if (typeof currentValue === "string") {
+          const maybeEl = target[currentValue];
+          if (isProfileInfoForm(maybeEl)) {
+            Reflect.defineProperty(reduceTarget, maybeEl.name, { value: maybeEl.value });
+          }
+        }
+        return reduceTarget;
+      }, {}) as ProfileInfo;
+      pushProfileInfo(payload);
+    }
   }
 
   onMounted( async() => {
     isLoadingData.value = true;
     const authorProfile = await getAuthorProfile();
+
+    // for (const key of Reflect.ownKeys(ProfileInfoKey)) {
+    //   if (isNaN(Number(key))) {
+    //     console.log('[name="name"]')
+    //     console.log(document.querySelector('[name="name"]'))
+    //     console.log(document.querySelector('textarea'))
+    //   }
+    // }
+    
+    // aboutAuthor.value = authorProfile.author;
+    // aboutOpinionline.value = authorProfile.opinionline;
+    // contactInfo.value = authorProfile.contact;
+
     if (authorProfile && !(authorProfile instanceof Error)) {
-      aboutAuthor.value.data = authorProfile.author;
-      aboutOpinionline.value.data = authorProfile.opinionline;
-      contactInfo.value.data = authorProfile.contact;
+      console.log(authorProfile)
     } else if (authorProfile instanceof Error) {
       console.error(authorProfile.message);
     }

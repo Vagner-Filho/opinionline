@@ -19,6 +19,10 @@ import type { User } from "firebase/auth";
 import { ref as fbRef, set, Database, push } from "firebase/database";
 import { getStorage, uploadBytes, ref as fbStorageRef } from "firebase/storage";
 import type { ArticleData } from "~/components/author/article/types";
+
+  // definePageMeta({
+  //   layout: 'author'
+  // })
   
   function handleSubmit(articleData: ArticleData) {
     const db = getDb()
@@ -38,7 +42,7 @@ import type { ArticleData } from "~/components/author/article/types";
       releaseDate: new Date().getTime(),
       text: articleData.text,
       title: articleData.title,
-      authorId: useState<User>('user').value.uid
+      authorId: useState<User>('author').value.uid
     }).then((onfulfilled) => {
       alert('Artigo criado com sucesso!')
     }).catch((error) => {
@@ -65,7 +69,7 @@ import type { ArticleData } from "~/components/author/article/types";
       releaseDate: new Date().toLocaleDateString('pt-br'),
       text: articleData.text,
       title: articleData.title,
-      authorId: useState<User>('user').value.uid
+      authorId: useState<User>('author').value.uid
     }).then((onfulfilled) => {
       alert('Artigo atualizado com sucesso!')
     }).catch((error) => {
@@ -112,7 +116,7 @@ import type { ArticleData } from "~/components/author/article/types";
       }
 
       const store = trans.objectStore('articles');
-      const req = store.add({ ...articleData, authorId: useState<User>('user').value.uid });
+      const req = store.add({ ...articleData, authorId: useState<User>('author').value.uid });
       req.onsuccess = (e) => {
         console.log('article sucessfully saved!');
       }
@@ -121,7 +125,7 @@ import type { ArticleData } from "~/components/author/article/types";
     iDBReq.onupgradeneeded = () => {
       const db = iDBReq.result;
       const store = db.createObjectStore('articles', { autoIncrement: true });
-      store.add({ ...articleData, authorId: useState<User>('user').value.uid });
+      store.add({ ...articleData, authorId: useState<User>('author').value.uid });
     }
   }
 </script>

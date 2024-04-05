@@ -8,7 +8,7 @@
       @newtag="toggleNewTagModal"
       class="max-w-[80px] mt-3"
     /> -->
-    <label for="cover-input" class="std-author-input w-full h-14 leading-[3.5rem] text-[#9fa6b2] text-center mt-[90px] mb-1 px-0">
+    <label for="cover-input" class="std-author-input w-full h-14 leading-[3.5rem] text-[#9fa6b2] text-center mt-[90px] mb-1 px-0 hover:cursor-pointer">
       <img v-if="coverPreview" :src="coverPreview" alt="cover-preview" class="object-cover w-full h-full">
       <div v-else>
         {{ coverPlaceholder }}
