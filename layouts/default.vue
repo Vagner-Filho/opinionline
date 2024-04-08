@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReaderNavBar :is-reader="true" />
+    <ReaderNavBar v-if="$route.name !== 'auth'" />
     <slot />
   </div>
 </template>

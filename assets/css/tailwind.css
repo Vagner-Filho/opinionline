@@ -16,7 +16,7 @@
     @apply bg-light-green
   }
   .navbar-btn {
-    @apply font-josefin-sans w-1/4 h-8 text-sm md:text-lg max-w-[200px] !leading-9 text-center bg-light-green
+    @apply font-josefin-sans w-1/4 h-8 text-sm md:text-lg max-w-[200px] text-center bg-light-green
   }
   .navbar-button-hover {
     @apply hover:bg-strong-green hover:text-white transition-colors transform-gpu duration-500 ease-in-out

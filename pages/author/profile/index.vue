@@ -8,8 +8,11 @@
       </header>
       <main class="flex flex-col mt-5 px-2" v-if="!isLoadingData">
         <div class="flex justify-start items-center mb-5">
-          <AuthorPic :author-pic="authorPic" />
-          <div class="text-2xl ml-3">Alterar Foto</div>
+          <label class="text-2xl flex items-center hover:cursor-pointer" for="author-image">
+            <AuthorPic :author-pic="authorPic" class="mr-2" />
+            Alterar Foto
+          </label>
+          <input type="file" name="image" id="author-image" class="hidden">
         </div>
         <form @submit.prevent="handleSubmit" class="">
           <div class="my-2 flex flex-col">
