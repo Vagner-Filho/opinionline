@@ -1,7 +1,10 @@
 import { ref as fbRef, set, update } from "firebase/database";
+import { ref as fbStorageRef, uploadBytes } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 export enum ProfileInfoKey {
   author,
+  authorPic,
   contact,
   opinionline,
   name,
@@ -10,6 +13,7 @@ export enum ProfileInfoKey {
 
 export type ProfileInfo = {
   author: string
+  authorPic: File
   contact: string
   opinionline: string
   name: string
@@ -30,4 +34,17 @@ export default async function pushProfileInfo(profileInfo: ProfileInfo) {
   }).catch((err) => {
     console.log(err);
   })
+
+  const authorPic = profileInfo.authorPic ? profileInfo.authorPic.name.toLowerCase().trim() : false;
+  if (authorPic) {
+    const storage = getStorage();
+    const storageRef = fbStorageRef(storage, authorPic);
+    uploadBytes(storageRef, profileInfo.authorPic)
+      .then((snapshot) => {
+        console.log('uploaded author pic', snapshot)
+      })
+      .catch((err) => {
+        console.warn('error in author pic', err)
+      })
+  }
 }

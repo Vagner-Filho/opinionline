@@ -7,14 +7,14 @@
         </h1>
       </header>
       <main class="flex flex-col mt-5 px-2" v-if="!isLoadingData">
-        <div class="flex justify-start items-center mb-5">
-          <label class="text-2xl flex items-center hover:cursor-pointer" for="author-image">
-            <AuthorPic :author-pic="authorPic" class="mr-2" />
-            Alterar Foto
-          </label>
-          <input type="file" name="image" id="author-image" class="hidden">
-        </div>
-        <form @submit.prevent="handleSubmit" class="">
+        <form @submit.prevent="handleSubmit">
+          <div class="my-2">
+            <label class="text-2xl flex items-center hover:cursor-pointer" for="author-image">
+              <AuthorPic :author-pic="authorPic" class="mr-2" />
+              Alterar Foto
+            </label>
+            <input type="file" name="authorPic" id="author-image" class="hidden">
+          </div>
           <div class="my-2 flex flex-col">
             <label class="text-2xl px-2" for="author-name">Nome</label>
             <input type="text" required id="author-name" class="border-none p-2 rounded-md dark:bg-neutral-800 bg-neutral-100 shadow-contour" name="name" />
