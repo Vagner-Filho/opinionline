@@ -6,14 +6,14 @@
           Perfil
         </h1>
       </header>
-      <main class="flex flex-col mt-5 px-2" v-if="!isLoadingData">
+      <main v-show="!isLoadingData" class="flex flex-col mt-5 px-2">
         <form @submit.prevent="handleSubmit">
           <div class="my-2">
             <label class="text-2xl flex items-center hover:cursor-pointer" for="author-image">
               <AuthorPic :author-pic="authorPic" class="mr-2" />
               Alterar Foto
             </label>
-            <input type="file" name="authorPic" id="author-image" class="hidden">
+            <input type="file" name="authorPic" id="author-image" class="hidden" @change="authorPic = getFilePreviewFromEvent($event)">
           </div>
           <div class="my-2 flex flex-col">
             <label class="text-2xl px-2" for="author-name">Nome</label>
@@ -48,7 +48,9 @@
 </template>
 
 <script setup lang="ts">
+import { getDownloadURL, getStorage, ref as fbStorageRef } from 'firebase/storage';
 import { ProfileInfoKey, type ProfileInfo } from '~/composables/pushProfileInfo';
+import { getFilePreviewFromEvent } from '~/utils';
 
   const isLoadingData = ref(false);
 
@@ -74,7 +76,13 @@ import { ProfileInfoKey, type ProfileInfo } from '~/composables/pushProfileInfo'
         if (typeof currentValue === "string") {
           const maybeEl = target[currentValue];
           if (isProfileInfoForm(maybeEl)) {
-            Reflect.defineProperty(reduceTarget, maybeEl.name, { value: maybeEl.value });
+            Reflect.defineProperty(
+              reduceTarget,
+              maybeEl.name,
+              {
+                value: maybeEl.type !== "file" ? maybeEl.value : maybeEl.files ? maybeEl.files[0] : undefined
+              }
+            );
           }
         }
         return reduceTarget;
@@ -86,21 +94,23 @@ import { ProfileInfoKey, type ProfileInfo } from '~/composables/pushProfileInfo'
   onMounted( async() => {
     isLoadingData.value = true;
     const authorProfile = await getAuthorProfile();
-
-    // for (const key of Reflect.ownKeys(ProfileInfoKey)) {
-    //   if (isNaN(Number(key))) {
-    //     console.log('[name="name"]')
-    //     console.log(document.querySelector('[name="name"]'))
-    //     console.log(document.querySelector('textarea'))
-    //   }
-    // }
-    
-    // aboutAuthor.value = authorProfile.author;
-    // aboutOpinionline.value = authorProfile.opinionline;
-    // contactInfo.value = authorProfile.contact;
-
     if (authorProfile && !(authorProfile instanceof Error)) {
-      console.log(authorProfile)
+      if (authorProfile.authorPic) {
+        const storage = getStorage();
+        getDownloadURL(fbStorageRef(storage, `author/picture/${authorProfile.authorPic}`))
+        .then((url) => {
+          authorPic.value = url;
+        })
+      }
+
+      for (const key of Reflect.ownKeys(ProfileInfoKey)) {
+        if (isNaN(Number(key))) {
+          const field = document.querySelector(`[name="${String(key)}"]`);
+          if (field && isProfileInfoForm(field) && field.type !== 'file') {
+            field.value = authorProfile[key]
+          }
+        }
+      }
     } else if (authorProfile instanceof Error) {
       console.error(authorProfile.message);
     }

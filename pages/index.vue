@@ -1,11 +1,13 @@
 <template>
   <div class="max-w-4xl m-auto">
     <section class="px-2" v-if="!isLoadingData">
-      <!-- <header v-if="articles.length > 0">
-        <ReaderHomeStateIndicator />
-      </header> -->
       <main class="flex flex-col pt-7" v-if="articles.length > 0">
-        <ReaderArticleCard v-for="(art, index) in articles" :key="index" :article="art" class="mb-6" @articleClicked="handleClick"/>
+        <ReaderArticleCard v-for="(art, index) in articles"
+          :key="index"
+          :article="art"
+          class="mb-6"
+          @articleClicked="handleClick"
+        />
       </main>
       <main v-else>
         No momento, nenhum artigo foi encontrado.
@@ -60,6 +62,7 @@ import type { IArticle } from "~/core/entities";
       }
       clearTimeout(takingTooLongTimeOut);
     }, 5000);
+
     onValue(articlesRef, (snapshot) => {
       articles.value = transformRawArticle(snapshot.val())
       isLoadingData.value = false;

@@ -1,5 +1,5 @@
 export type ArticleData = {
-  title: string,
-  cover: File | false,
+  title: string
+  cover?: File
   text: string
 }

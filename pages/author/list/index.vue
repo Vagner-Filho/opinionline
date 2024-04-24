@@ -18,27 +18,19 @@
           @delete="handleDelete"
         />
       </main>
-      <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
+      <Spinner v-else class="mx-auto mt-32" />
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-  
 
   const isLoadingData = ref(false);
   const authorArticles = ref([])
   onMounted( async() => {
     isLoadingData.value = true;
     authorArticles.value = await getArticles();
-    const indexedArticles = getArticlesFromIndexedDB();
-    if (!(indexedArticles instanceof Error) && indexedArticles) {
-      console.log('oi ai')
-      authorArticles.value = authorArticles.value.concat(indexedArticles);
-    } else if(indexedArticles instanceof Error) {
-      console.error(indexedArticles.message);
-    }
-    isLoadingData.value = false;
+    isLoadingData.value = false; 
   });
 
   async function handleDelete(id: string) {
@@ -50,23 +42,5 @@
   async function handleEdit(id: string) {
     const router = useRouter()
     router.push({ name: 'author-article', query: { isNew: '0', articleId: id } })
-  }
-  function getArticlesFromIndexedDB() {
-    const iDBReq = window.indexedDB.open('opinionline');
-    
-    let res;
-    iDBReq.onsuccess = (e) => {
-      const db = iDBReq.result;
-      const trans = db.transaction('articles', 'readonly');
-      const store = trans.objectStore('articles');
-      const articles = store.getAll();
-      articles.onsuccess = (e) => {
-        res = (e.target as IDBRequest).result;
-      }
-    }
-    iDBReq.onerror = (e) => {
-      res = new Error(`error: ${e}`);
-    }
-    return res;
   }
 </script>

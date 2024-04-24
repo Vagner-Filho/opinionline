@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <img v-if="!authorPic" id="author-pic" src="/default/authorPic.svg" alt="foto do(a) autor(a)">
-    <div v-else>opa</div>
-  </div>
+  <img class="w-20 h-20 rounded-full object-cover" id="author-pic" :src="authorPic ?? '/default/authorPic.svg'" alt="foto da autora">
 </template>
 
 <script setup lang="ts">

@@ -1,17 +1,17 @@
 <template>
   <div :id="articleId">
     <nav>
-      <ul class="flex h-12 w-full border-b-2 border-black">
-        <li class="w-1/2" @click="$router.push({ name: 'author-article', query: { isViewOnly: '1', articleId: id }})">
+      <ul class="flex h-12 w-full">
+        <li class="w-3/5" @click="$router.push({ name: 'author-article', query: { isViewOnly: '1', articleId: id }})">
           <h1 class="text-2xl truncate h-full leading-[3rem] hover:cursor-pointer">{{ title }}</h1>
         </li>
-        <li class="w-1/4 text-center flex items-center px-2">
+        <li class="w-1/5 text-center flex items-center px-2">
           <CustomLabel class="hover:cursor-pointer" :is-label-for="'checkbox-' + articleId" :label-type="'checkbox'" />
           <input type="checkbox" :id="'checkbox-' + articleId" class="hidden" :value="isPublished" @click="$emit('status', id)">
         </li>
-        <li class="ml-auto flex items-center justify-end w-1/4">
-          <img src="/author/pencil.svg" class="mr-4 w-full max-w-[21px] hover:cursor-pointer" alt="editar" @click="$emit('edit', id)">
-          <img src="/author/trash.svg" class="w-full max-w-[25px] hover:cursor-pointer" alt="excluir" @click="$emit('delete', id)">
+        <li class="ml-auto w-1/5 flex items-center justify-end">
+          <UIcon name="i-heroicons-pencil-solid" class="mr-4" @click="$router.push({ name: 'author-article', query: { isViewOnly: '0', articleId: id }})" />
+          <UIcon name="i-heroicons-trash-solid" />
         </li>
       </ul>
     </nav>

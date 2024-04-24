@@ -22,12 +22,14 @@ export type ProfileInfo = {
 
 export default async function pushProfileInfo(profileInfo: ProfileInfo) {
   const db = getDb()
+  const authorPic = profileInfo.authorPic ? profileInfo.authorPic.name.toLowerCase().trim() : false;
   set(fbRef(db, 'about/'), {
     author: profileInfo.author,
+    authorPic: authorPic ?? undefined,
     name: profileInfo.name,
     contact: profileInfo.contact,
     email: profileInfo.email,
-    opinionline: profileInfo.opinionline
+    opinionline: profileInfo.opinionline,
   })
   .then((res) => {
     console.log(res);
@@ -35,10 +37,9 @@ export default async function pushProfileInfo(profileInfo: ProfileInfo) {
     console.log(err);
   })
 
-  const authorPic = profileInfo.authorPic ? profileInfo.authorPic.name.toLowerCase().trim() : false;
   if (authorPic) {
     const storage = getStorage();
-    const storageRef = fbStorageRef(storage, authorPic);
+    const storageRef = fbStorageRef(storage, `author/picture/${authorPic}`);
     uploadBytes(storageRef, profileInfo.authorPic)
       .then((snapshot) => {
         console.log('uploaded author pic', snapshot)

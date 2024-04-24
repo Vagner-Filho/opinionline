@@ -1,6 +1,7 @@
 <template>
   <section>
-    <main class="flex flex-col" v-show="!isLoadingAboutInfo">
+    <main v-show="!isLoadingAboutInfo">
+      <AuthorPic class="mb-2" :author-pic="authorPic" />
       <dl>
         <dt>Autora</dt>
         <dd ref="nameRef">
@@ -29,6 +30,8 @@
 </template>
 
 <script setup lang="ts">
+import { getDownloadURL, getStorage, ref as fbStorageRef } from 'firebase/storage';
+
 const nameRef = ref<HTMLParagraphElement>();
 const emailRef = ref<HTMLParagraphElement>();
 const whoRef = ref<HTMLParagraphElement>();
@@ -36,11 +39,18 @@ const aboutRef = ref<HTMLParagraphElement>();
 const contactRef = ref<HTMLParagraphElement>();
 
 const isLoadingAboutInfo = ref(false);
+const authorPic = ref('');
 onMounted(async () => {
   isLoadingAboutInfo.value = true;
   const authorProfile = await getAuthorProfile();
+  if (authorProfile.authorPic) {
+    const storage = getStorage();
+    getDownloadURL(fbStorageRef(storage, `author/picture/${authorProfile.authorPic}`))
+    .then((url) => {
+      authorPic.value = url;
+    })
+  }
   isLoadingAboutInfo.value = false;
-  console.log(nameRef.value)
 
   nameRef.value!.innerText = authorProfile.name
   emailRef.value!.innerText = authorProfile.email

@@ -4,7 +4,7 @@
       <input class="w-[276px] h-[30px] mt-[44px] mb-[11px] dark:bg-[#3b3b3b] bg-[#D2D2D2] rounded-md px-2" id="email" type="text" v-model="email" aria-placeholder="e-mail" placeholder="e-mail" required>
       <input class="w-[276px] h-[30px] mb-[16px] dark:bg-[#3b3b3b] bg-[#D2D2D2] rounded-md px-2" id="senha" type="password" v-model="pass" aria-placeholder="senha" placeholder="senha" required>
       <button v-if="!isLoadingData" type="submit" class="confirmation-btn std-btn-shape text-base">Entrar</button>
-      <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
+      <Spinner v-else class="mt-32" />
     </form>
   </div>
 </template>
@@ -25,6 +25,7 @@
     signInWithEmailAndPassword(auth, email.value, pass.value)
     .then((userCredential) => {
       useState<User>('author', () => userCredential.user);
+  console.log(useState<User>('author'))
       const router = useRouter()
       router.push({ name: 'author-article', query: { isNew: '1' } })
     }).catch((error) => {

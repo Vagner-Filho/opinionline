@@ -4,7 +4,6 @@ export default async function getArticleFromId(id: string | string[]) {
   const db = getDb()
   const dbRef = fbRef(db, `articles/${id}`)
 
-
   const rawResult = await get(dbRef)
   .then((snapshot) => {
     if (snapshot.exists()) {

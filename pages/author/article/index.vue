@@ -7,8 +7,8 @@
       :coverPlaceholder="'Adicionar Capa'"
       :articleTextPlaceholder="'Texto'"
       :existing-article="existingArticle"
+      :cover-url="coverUrl"
       @article="handleSubmit"
-      @save="handleSave"
     />
     <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
   </div>
@@ -16,9 +16,10 @@
 
 <script setup lang="ts">
 import type { User } from "firebase/auth";
-import { ref as fbRef, set, Database, push } from "firebase/database";
-import { getStorage, uploadBytes, ref as fbStorageRef } from "firebase/storage";
+import { ref as fbRef, update, Database, push } from "firebase/database";
+import { getStorage, uploadBytes, ref as fbStorageRef, getDownloadURL } from "firebase/storage";
 import type { ArticleData } from "~/components/author/article/types";
+import { Article } from "~/server/entities";
 
   // definePageMeta({
   //   layout: 'author'
@@ -27,45 +28,42 @@ import type { ArticleData } from "~/components/author/article/types";
   function handleSubmit(articleData: ArticleData) {
     const db = getDb()
     const route = useRoute()
-    if (route.query.isNew === '1') {
+    const articleId = route.query.articleId;
+    console.log(articleId);
+    if (!articleId) {
       createArticle(db, articleData)
     } else {
-      updateArticle(db, articleData, route.query.articleId.toString())
+      updateArticle(db, articleData, articleId.toString())
     }
   }
   async function createArticle(db: Database, articleData: ArticleData) {
-    const coverName = articleData.cover ? articleData.cover.name.toLowerCase().trim() : false;
     push(fbRef(db, 'articles/'), {
-      authorPic: false,
-      cover: coverName,
-      preview: 'new inserted text',
       releaseDate: new Date().getTime(),
       text: articleData.text,
       title: articleData.title,
       authorId: useState<User>('author').value.uid
     }).then((onfulfilled) => {
+        const key = onfulfilled.key;
+        if (key && articleData.cover) {
+            const storage = getStorage();
+            const storageRef = fbStorageRef(storage, `article/${key}`);
+            uploadBytes(storageRef, articleData.cover)
+            .then((snapshot) => {
+              console.log('uploaded', snapshot)
+            })
+            .catch((err) => {
+              console.warn('error', err)
+            })       
+        }
+
       alert('Artigo criado com sucesso!')
     }).catch((error) => {
       console.error(error);
     })
-
-    if (articleData.cover && coverName) {
-      const storage = getStorage();
-      const storageRef = fbStorageRef(storage, coverName);
-      uploadBytes(storageRef, articleData.cover)
-        .then((snapshot) => {
-          console.log('uploaded', snapshot)
-        })
-        .catch((err) => {
-          console.warn('error', err)
-        })
-    }
   }
-  function updateArticle(db: Database, articleData, articleId: string) {
-    set(fbRef(db, `articles/${articleId}`), {
-      authorPic: false,
-      cover: false,
-      preview: 'edited text',
+
+  function updateArticle(db: Database, articleData: any, articleId: string) {
+    update(fbRef(db, `articles/${articleId}`), {
       releaseDate: new Date().toLocaleDateString('pt-br'),
       text: articleData.text,
       title: articleData.title,
@@ -78,54 +76,27 @@ import type { ArticleData } from "~/components/author/article/types";
   }
 
   const isLoadingData = ref(false)
-  const existingArticle = ref({})
+  const existingArticle = ref<Article>();
+  const coverUrl = ref<string>();
+
   onMounted(async() => {
     const route = useRoute()
-    if (route.query.isNew === '0' || route.query.isViewOnly === '1') {
+    const articleId = route.query.articleId;
+    if (articleId) {
       isLoadingData.value = true
-      existingArticle.value = await getArticleFromId(route.query.articleId)
-      isLoadingData.value = false
+      existingArticle.value = await getArticleFromId(articleId.toString())
+      if (existingArticle.value) {
+        const storage = getStorage();
+        getDownloadURL(fbStorageRef(storage, `article/${articleId.toString()}`))
+        .then((res) => {
+            coverUrl.value = res;
+        })
+        .finally(() => {
+            isLoadingData.value = false
+        })
+        return;
+      }
+      // TODO: handle article not found
     }
   })
-
-  const route = useRoute()
-  watchEffect(() => {
-    if (route.query.isNew === '1') {
-      const defaultForm = {
-        title: '',
-        cover: false,
-        text: ''
-      }
-      existingArticle.value = { ...defaultForm }
-    }
-  })
-
-  function handleSave(articleData) {
-    const iDBReq = window.indexedDB.open('opinionline');
-
-    iDBReq.onerror = (e) => {
-      console.warn(e);
-    }
-
-    iDBReq.onsuccess = (e) => {
-      const db = iDBReq.result;
-      const trans = db.transaction('articles', 'readwrite');
-
-      trans.onerror = (e) => {
-        console.warn(e);
-      }
-
-      const store = trans.objectStore('articles');
-      const req = store.add({ ...articleData, authorId: useState<User>('author').value.uid });
-      req.onsuccess = (e) => {
-        console.log('article sucessfully saved!');
-      }
-    }
-
-    iDBReq.onupgradeneeded = () => {
-      const db = iDBReq.result;
-      const store = db.createObjectStore('articles', { autoIncrement: true });
-      store.add({ ...articleData, authorId: useState<User>('author').value.uid });
-    }
-  }
 </script>

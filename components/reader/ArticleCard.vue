@@ -4,8 +4,7 @@
       <div v-if="!article.cover" class="rounded-t-md h-20 bg-[url('/default/cover.svg')] bg-center bg-no-repeat bg-cover" id="default-cover" alt="default article cover" />
       <img v-else class="h-20 object-cover w-full" :src="articleCoverUrl" id="cover" :alt="article.title + ' cover'" />
       <div class="absolute -bottom-5 left-5">
-        <img v-if="article.authorPic" id="author-pic" :src="article.authorPic" alt="foto do(a) autor(a)">
-        <img v-else id="author-pic" src="/default/authorPic.svg" alt="foto do(a) autor(a)">
+        <AuthorPic :author-pic="authorPic" />
       </div>
     </header>
     <main class="px-2 mt-7">
@@ -26,6 +25,7 @@ import { getStorage, ref as fbStorageRef, getDownloadURL } from "firebase/storag
     article: IArticle;
   }>();
 
+  const authorPic = ref('');
   const isLoadingArticleCover = ref(false);
   const articleCoverUrl = ref('');
   onMounted(async () => {

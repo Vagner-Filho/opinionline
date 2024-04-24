@@ -1,11 +1,12 @@
 import type { User } from "firebase/auth";
-import { ref as fbRef, get, query, equalTo, orderByChild, onValue } from "firebase/database";
+import { ref as fbRef, get, query, equalTo, orderByChild } from "firebase/database";
 
 export default async function getArticles() {
   const db = getDb()
   const dbRef = fbRef(db, 'articles')
 
-  const authorId = useState<User>('user').value.uid
+  console.log(useState<User>('author'))
+  const authorId = useState<User>('author').value.uid
   const q = query(dbRef, orderByChild('authorId'), equalTo(authorId));
 
   const rawResult = await get(q)
