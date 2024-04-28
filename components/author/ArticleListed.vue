@@ -10,8 +10,12 @@
           <input type="checkbox" :id="'checkbox-' + articleId" class="hidden" :value="isPublished" @click="$emit('status', id)">
         </li>
         <li class="ml-auto w-1/5 flex items-center justify-end">
-          <UIcon name="i-heroicons-pencil-solid" class="mr-4" @click="$router.push({ name: 'author-article', query: { isViewOnly: '0', articleId: id }})" />
+        <button type="button">
+          <UIcon name="i-heroicons-pencil-solid" class="std-icon-hover mr-4" @click="$router.push({ name: 'author-article', query: { isViewOnly: '0', articleId: id }})" />
+        </button>
+        <button type="button">
           <UIcon name="i-heroicons-trash-solid" />
+        </button>
         </li>
       </ul>
     </nav>

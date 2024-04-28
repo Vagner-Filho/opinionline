@@ -42,7 +42,7 @@
           </div>
         </form>
       </main>
-      <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
+      <Spinner class="mt-32 mx-auto" v-if="isLoadingData"/>
     </section>
   </div>
 </template>

@@ -5,7 +5,6 @@ export default async function getArticles() {
   const db = getDb()
   const dbRef = fbRef(db, 'articles')
 
-  console.log(useState<User>('author'))
   const authorId = useState<User>('author').value.uid
   const q = query(dbRef, orderByChild('authorId'), equalTo(authorId));
 
