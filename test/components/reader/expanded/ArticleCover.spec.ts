@@ -1,5 +1,6 @@
 import ArticleCover from '../../../../components/reader/expanded/ArticleCover.vue';
 import { shallowMount } from '@vue/test-utils';
+import { test, describe, expect } from 'bun:test';
 
 describe('ArticleCover', () => {
   const wrapper = shallowMount(ArticleCover, {

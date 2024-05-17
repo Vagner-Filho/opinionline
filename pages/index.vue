@@ -2,11 +2,16 @@
   <div class="max-w-4xl m-auto">
     <section class="px-2" v-if="!isLoadingData">
       <main class="flex flex-col pt-7" v-if="articles.length > 0">
-        <ReaderArticleCard v-for="(art, index) in articles"
+        <ReaderArticleCard
+          v-for="(art, index) in articles"
           :key="index"
-          :article="art"
+          :title="art.title"
+          :text="art.text"
+          :cover="'art.cover'"
+          :release-date="new Date().getTime()"
+          :author-pic="'no pick'"
           class="mb-6"
-          @articleClicked="handleClick"
+          @articleClicked="handleClick(art.id)"
         />
       </main>
       <main v-else>
@@ -36,13 +41,13 @@
 import { getDatabase, ref as fbRef, onValue } from "firebase/database";
 import type { IArticle } from "~/core/entities";
 
-  function handleClick(article: IArticle) {
+  function handleClick(articleId: string) {
     const router = useRouter();
-    router.push({ path: `article/${article.id}` })
+    router.push({ path: `article/${articleId}` })
   }
   
   const isLoadingData = ref(false);
-  const articles = ref([]);
+  const articles = ref<Array<any>>([]);
   const takingTooLongDialogRef = ref<HTMLDialogElement>();
   onMounted(() => {
     isLoadingData.value = true;
