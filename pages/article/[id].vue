@@ -1,9 +1,11 @@
 <template>
   <section class="max-w-4xl m-auto">
     <main class="px-2" v-if="!isLoadingData">
-      <ReaderExpandedArticleCover :article-title="fullArticle.title" :cover-path="null" />
+      <img :src="fullArticle.cover ?? 'default-cover'" class="h-24 w-full rounded-md" />
       <ReaderExpandedArticleInfo :author-pic="null" :release-date="fullArticle.releaseDate" :title="fullArticle.title" :tags="['teste']" />
-      <ReaderExpandedArticleText :article-text="fullArticle.text" />
+      <article>
+          {{ fullArticle.text }}
+      </article>
     </main>
     <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
   </section>

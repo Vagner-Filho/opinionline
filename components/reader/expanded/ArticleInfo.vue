@@ -10,22 +10,22 @@
         </div>
       </main>
       <footer>
-        <time>{{ releaseDate }}</time>
+        <time>{{ getUserReadableDate(releaseDate) }}</time>
       </footer>
     </section>
     <div class="w-1/3" id="author-pic">
-      <img class="ml-auto" v-if="authorPic" :src="authorPic" :alt="'autor(a) de: ' + title" />
-      <img class="ml-auto" v-else src="/default/authorPic.svg" :alt="'autor(a) de: ' + title" />
+      <img class="ml-auto" :src="authorPic ?? '/default/authorPic.svg'" :alt="'autor(a) de: ' + title" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import ArticleTag from './ArticleTag.vue';
+import { getUserReadableDate } from '#imports';
   defineProps<{
     title: string
     tags: string[]
-    releaseDate: string
+    releaseDate: Date | number 
     authorPic: string | null
   }>();
 </script>

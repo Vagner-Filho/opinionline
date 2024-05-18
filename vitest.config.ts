@@ -1,16 +1,7 @@
-import { defineConfig } from 'vitest/config'
-import vue from '@vitejs/plugin-vue';
-import { alias } from './utils/alias';
+import { defineVitestConfig } from '@nuxt/test-utils/config'
 
-export default defineConfig({
-    root: '.',
-    plugins: [vue()],
+export default defineVitestConfig({
     test: {
-        // ... Specify options here.
-        environment: 'happy-dom',
-
-    },
-    resolve: {
-        alias
+        environment: 'happy-dom'
     }
 })

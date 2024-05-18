@@ -25,6 +25,9 @@ describe('ArticleCard', () => {
     it('renders title', () => {
         expect(wrapper.find('h1').text()).toBe(titleMock);
     })
+    it('renders text', () => {
+        expect(wrapper.find('article').text()).toBe(textMock);
+    })
     it('renders author picture', () => {
         expect(wrapper.find('#author-pic').attributes('src')).toBe(authorPicMock);
     })

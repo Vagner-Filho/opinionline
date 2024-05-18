@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import HomeStateIndicator from '../../../components/reader/HomeStateIndicator.vue';
 import { shallowMount } from '@vue/test-utils'; 
 
