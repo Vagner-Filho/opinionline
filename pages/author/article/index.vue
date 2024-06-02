@@ -12,70 +12,41 @@
 </template>
 
 <script setup lang="ts">
-import type { User } from "firebase/auth";
-import { ref as fbRef, update, Database, push } from "firebase/database";
-import { getStorage, ref as fbStorageRef, getDownloadURL } from "firebase/storage";
 import type { ArticleData } from "~/components/author/article/types";
-import { saveCover } from "~/server/data/article/cover";
-import { Article } from "~/server/entities";
+import type { Article } from "~/server/core/entities";
 
 function handleSubmit(articleData: ArticleData) {
-    const db = getDb()
     const route = useRoute()
     const articleId = route.query.articleId;
     if (!articleId) {
-        createArticle(db, articleData)
+        createArticle(articleData)
     } else {
-        updateArticle(db, articleData, articleId.toString())
-    }
-}
-async function createArticle(db: Database, articleData: ArticleData) {
-    push(fbRef(db, 'articles/'), {
-        releaseDate: new Date().getTime(),
-        text: articleData.text,
-        title: articleData.title,
-        authorId: useState<User>('author').value.uid
-    }).then((onfulfilled) => {
-        const key = onfulfilled.key;
-        if (key && articleData.cover) {
-            saveCover(articleData.cover, key);
-        }
-        alert('Artigo criado com sucesso!')
-    }).catch((error) => {
-        console.error(error);
-    })
-}
-
-function updateArticle(db: Database, articleData: ArticleData, articleId: string) {
-    if (existingArticle.value) {
-        const newText = articleData.text === existingArticle.value.text ? undefined : articleData.text;
-        const newTitle = articleData.title === existingArticle.value.title ? undefined : articleData.title;
-
-        const handleResponse = (status: "success" | "error") => {
-            alert(status === "success" ? "Artigo atualizado!" : "Falha ao atualizar Artigo");
-        }
-
-        if (newText) {
-            update(fbRef(db, `articles/${articleId}`), {
-                text: newText,
-            }).then(() => handleResponse("success"))
-                .catch(() => handleResponse("error"))
-        }
-        if (newTitle) {
-            update(fbRef(db, `articles/${articleId}`), {
-                title: newTitle,
-            }).then(() => handleResponse("success"))
-                .catch(() => handleResponse("error"))
-        }
-
-        if (articleData.cover) {
-            saveCover(articleData.cover, articleId);
-        }
+        //      updateArticle(db, articleData, articleId.toString())
     }
 }
 
-const isLoadingData = ref(false)
-const existingArticle = ref<Article>();
+async function createArticle(article: ArticleData) {
+    const data = new FormData()
+    data.set('title', article.title)
+    data.set('text', article.text)
+    if (article.cover) {
+        data.set('cover', article.cover)
+    }
+    data.set('authorId', '1')
+    const newArticle = {
+        title: article.title,
+        text: article.text,
+        cover: article.cover,
+        authorId: 1
+    }
+    console.log(await $fetch('/api/article', {
+        method: "POST",
+        body: data 
+    }))
+}
+
+const isLoadingData = ref(false);
+const existingArticle = ref();
 const coverUrl = ref<string>();
 
 onMounted(async () => {
@@ -83,17 +54,8 @@ onMounted(async () => {
     const articleId = route.query.articleId;
     if (articleId) {
         isLoadingData.value = true
-        existingArticle.value = await getArticleFromId(articleId.toString())
+        // existingArticle.value = await getArticleFromId(articleId.toString())
         if (existingArticle.value) {
-            const storage = getStorage();
-            getDownloadURL(fbStorageRef(storage, `article/${articleId.toString()}`))
-                .then((res) => {
-                    coverUrl.value = res;
-                })
-                .finally(() => {
-                    isLoadingData.value = false
-                })
-            return;
         }
         // TODO: handle article not found
     }

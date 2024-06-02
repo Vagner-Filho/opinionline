@@ -14,3 +14,16 @@ export function getUserReadableDate(date: number | Date) {
         dateStyle: 'long'
     }).format(date);
 }
+
+export function getMissingFields<ToOmit extends string>(requiredObj: Omit<object, ToOmit>, providedObj: object) {
+    const requiredFields = Reflect.ownKeys(requiredObj);
+    const keyArray = (providedObj instanceof FormData) ? Array.from(providedObj.keys()) : Reflect.ownKeys(providedObj); 
+ 
+    return keyArray.reduce<Array<string>>((acc, field) => {
+        if (!requiredFields.includes(field) && typeof field === "string") {
+            acc.push(field)
+            return acc;
+        }
+        return acc;
+    }, [])
+}

@@ -3,48 +3,57 @@
 @tailwind utilities;
 
 @layer components {
-  .std-btn-shape {
-    @apply rounded-3xl border-0 px-3 py-1 text-xl
-  }
-  .confirmation-btn {
-    @apply bg-strong-green text-white rounded-md hover:shadow-lg focus-visible:shadow-lg transition-all transform-gpu duration-700 ease-in-out focus-visible:bg-light-green hover:bg-light-green focus-visible:text-strong-green hover:text-strong-green focus-visible:outline-strong-green hover:outline-strong-green
-  }
-  .shadow-hover {
-    @apply transition-shadow duration-500 ease-in-out hover:shadow-xl hover:dark:shadow-light-gray
-  }
-  .light-green-bg {
-    @apply bg-light-green
-  }
-  .navbar-btn {
-    @apply font-josefin-sans w-1/4 h-8 text-sm md:text-lg max-w-[200px] text-center bg-light-green
-  }
-  .navbar-button-hover {
-    @apply hover:bg-strong-green hover:text-white transition-colors transform-gpu duration-500 ease-in-out
-  }
-  .std-author-input {
-    @apply px-4 font-josefin-sans rounded-md shadow-sm dark:shadow-light-gray text-lg
-  }
-  .std-icon-hover {
-    @apply transition-all duration-500 ease-in-out hover:scale-110 hover:text-strong-green
-  }
+    .std-btn-shape {
+        @apply rounded-3xl border-0 px-3 py-1 text-xl
+    }
+
+    .confirmation-btn {
+        @apply bg-strong-green text-white rounded-md hover:shadow-lg focus-visible:shadow-lg transition-all transform-gpu duration-700 ease-in-out focus-visible:bg-light-green hover:bg-light-green focus-visible:text-strong-green hover:text-strong-green focus-visible:outline-strong-green hover:outline-strong-green
+    }
+
+    .shadow-hover {
+        @apply transition-shadow duration-500 ease-in-out hover:shadow-md hover:shadow-light-green
+    }
+
+    .light-green-bg {
+        @apply bg-light-green
+    }
+
+    .navbar-btn {
+        @apply font-josefin-sans w-1/4 h-8 text-sm md:text-lg max-w-[200px] text-center bg-light-green
+    }
+
+    .navbar-button-hover {
+        @apply hover:bg-strong-green hover:text-white transition-colors transform-gpu duration-500 ease-in-out
+    }
+
+    .std-author-input {
+        @apply px-4 font-josefin-sans rounded-md shadow-sm dark:shadow-light-gray text-lg
+    }
+
+    .std-icon-hover {
+        @apply transition-all duration-500 ease-in-out hover:scale-110 hover:text-strong-green
+    }
 }
 
 @layer base {
-  input, textarea {
-    @apply focus-visible:outline-strong-green appearance-none outline-none outline-offset-0
-  }
 
-  html {
-    font-family: "JosefinSans", sans-serif, system-ui, -apple-system;
-  }
+    input,
+    textarea {
+        @apply focus-visible:outline-strong-green appearance-none outline-none outline-offset-0
+    }
+
+    html {
+        font-family: "JosefinSans", sans-serif, system-ui, -apple-system;
+    }
 }
 
 @font-face {
-  font-family: 'GreatVibes';
-  src: url('../font/GreatVibes-Regular.ttf');
+    font-family: 'GreatVibes';
+    src: url('../font/GreatVibes-Regular.ttf');
 }
 
 @font-face {
-  font-family: 'JosefinSans';
-  src: url('../font/JosefinSans-VariableFont_wght.ttf');
+    font-family: 'JosefinSans';
+    src: url('../font/JosefinSans-VariableFont_wght.ttf');
 }

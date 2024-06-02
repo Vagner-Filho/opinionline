@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { ArticleData } from './types';
-import { Article } from '~/server/entities';
+import { Article } from '~/server/core/entities';
 
   const props = defineProps({
     titlePlaceholder: {

@@ -13,7 +13,7 @@
   "dependencies": {
     "@nuxt/ui": "^2.14.1",
     "@vitejs/plugin-vue": "^5.0.4",
-    "firebase": "^9.23.0",
+    "better-sqlite3": "^10.0.0",
     "nuxt": "^3.10.1",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
@@ -22,6 +22,7 @@
     "@faker-js/faker": "^8.4.1",
     "@happy-dom/global-registrator": "^14.10.1",
     "@nuxt/test-utils": "^3.13.0",
+    "@types/better-sqlite3": "^7.6.10",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^14.11.0",
     "playwright-core": "^1.44.0",

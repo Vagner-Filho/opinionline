@@ -3,18 +3,14 @@
     <Title>Opinionline</Title>
     <h1 class="text-4xl select-none text-center font-great-vibes mt-5 hover:cursor-default" @click="handleClick">Opinionline</h1>
     <ThemePicker class="absolute top-5" />
-    <NuxtLayout :name="isAuthorLoggedIn ? 'author' : 'default'">
+    <NuxtLayout :name="false ? 'author' : 'default'">
       <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { User } from 'firebase/auth';
 import './assets/css/tailwind.css';
-
-const isAuthorLoggedIn = useState<User>('author')
-watch(isAuthorLoggedIn, () => console.log(isAuthorLoggedIn.value), { deep: true })
 
 const router = useRouter();
 let counter = 0;

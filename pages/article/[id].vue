@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-  import { getDatabase, ref as fbRef, child, get } from "firebase/database";
   import { onMounted, ref } from 'vue'
 
   onMounted(() => {
@@ -24,21 +23,6 @@
   const isLoadingData = ref(true)
   const fullArticle = ref()
   function getFullArticle() {
-    const { $firebaseApp } = useNuxtApp()
-
-    const db = getDatabase($firebaseApp())
-    const dbRef = fbRef(db)
     const route = useRoute()
-    get(child(dbRef,`articles/${route.params.id}`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        fullArticle.value = snapshot.val()
-        isLoadingData.value = false
-      } else {
-        alert('Article not found')
-      }
-    }).catch((error) => {
-      console.error(error);
-    })
   }
 </script>

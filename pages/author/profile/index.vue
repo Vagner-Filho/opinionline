@@ -48,8 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import { getDownloadURL, getStorage, ref as fbStorageRef } from 'firebase/storage';
-import { ProfileInfoKey, type ProfileInfo } from '~/composables/pushProfileInfo';
 import { getFilePreviewFromEvent } from '~/utils';
 
   const isLoadingData = ref(false);
@@ -58,59 +56,18 @@ import { getFilePreviewFromEvent } from '~/utils';
   
   type InputEl = HTMLInputElement & HTMLTextAreaElement;
 
-  interface ProfileInfoForm extends InputEl {
-    name: keyof ProfileInfo
-  }
-
-  const isProfileInfoForm = (value: any): value is ProfileInfoForm => {
-    return (
-      (value instanceof HTMLTextAreaElement || value instanceof HTMLInputElement)
-      && value.name in ProfileInfoKey
-    )
-  }
-
   async function handleSubmit(ev: Event) {
-    const target = ev.target as HTMLFormElement;
-    if (target) {
-      const payload = Reflect.ownKeys(target).reduce((reduceTarget, currentValue) => {
-        if (typeof currentValue === "string") {
-          const maybeEl = target[currentValue];
-          if (isProfileInfoForm(maybeEl)) {
-            Reflect.defineProperty(
-              reduceTarget,
-              maybeEl.name,
-              {
-                value: maybeEl.type !== "file" ? maybeEl.value : maybeEl.files ? maybeEl.files[0] : undefined
-              }
-            );
-          }
-        }
-        return reduceTarget;
-      }, {}) as ProfileInfo;
-      pushProfileInfo(payload);
-    }
+    
   }
 
   onMounted( async() => {
     isLoadingData.value = true;
-    const authorProfile = await getAuthorProfile();
+    const authorProfile = {}
     if (authorProfile && !(authorProfile instanceof Error)) {
       if (authorProfile.authorPic) {
-        const storage = getStorage();
-        getDownloadURL(fbStorageRef(storage, `author/picture/${authorProfile.authorPic}`))
-        .then((url) => {
-          authorPic.value = url;
-        })
+        
       }
 
-      for (const key of Reflect.ownKeys(ProfileInfoKey)) {
-        if (isNaN(Number(key))) {
-          const field = document.querySelector(`[name="${String(key)}"]`);
-          if (field && isProfileInfoForm(field) && field.type !== 'file') {
-            field.value = authorProfile[key]
-          }
-        }
-      }
     } else if (authorProfile instanceof Error) {
       console.error(authorProfile.message);
     }

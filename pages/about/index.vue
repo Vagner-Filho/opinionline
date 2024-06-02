@@ -30,8 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { getDownloadURL, getStorage, ref as fbStorageRef } from 'firebase/storage';
-
 const nameRef = ref<HTMLParagraphElement>();
 const emailRef = ref<HTMLParagraphElement>();
 const whoRef = ref<HTMLParagraphElement>();
@@ -42,13 +40,8 @@ const isLoadingAboutInfo = ref(false);
 const authorPic = ref('');
 onMounted(async () => {
   isLoadingAboutInfo.value = true;
-  const authorProfile = await getAuthorProfile();
+  const authorProfile = {} 
   if (authorProfile.authorPic) {
-    const storage = getStorage();
-    getDownloadURL(fbStorageRef(storage, `author/picture/${authorProfile.authorPic}`))
-    .then((url) => {
-      authorPic.value = url;
-    })
   }
   isLoadingAboutInfo.value = false;
 
