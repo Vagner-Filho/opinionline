@@ -2,9 +2,18 @@
     <div class="max-w-4xl m-auto">
         <section class="px-2" v-if="!pending">
             <main class="flex flex-col pt-7" v-if="data && data.length > 0 && !error">
-                <ReaderArticleCard v-for="(art, index) in data" :key="index" :title="art.title" :text="art.text"
-                    :cover="art.cover" :release-date="art.releaseDate" :author-pic="'/author/default_author.png'" class="mb-6"
-                    @articleClicked="handleClick(art.id)" />
+                <ReaderArticleCard
+                    v-for="(art, index) in data"
+                    :key="index"
+                    :title="art.title"
+                    :text="art.text"
+                    :cover="art.cover"
+                    :release-date="art.releaseDate"
+                    :author-pic="'/author/default_author.png'"
+                    class="mb-6"
+                    @click="handleClick(art.id)"
+                    @keypess.enter="handleClick(art.id)"
+                />
             </main>
             <main v-else>
                 No momento, nenhum artigo foi encontrado.
@@ -33,7 +42,7 @@
 import type { ReleasedArticle } from '~/server/core/entities';
 const { data, pending, error } = await useFetch<Array<ReleasedArticle>>('/api/article');
 
-function handleClick(articleId: string) {
+function handleClick(articleId: number) {
     const router = useRouter();
     router.push({ path: `article/${articleId}` })
 }

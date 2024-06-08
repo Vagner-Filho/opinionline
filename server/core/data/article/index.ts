@@ -46,3 +46,15 @@ export async function insertArticleData(article: ArticlePayload) {
         return { articleId: null, error: new Error() }
     }
 }
+
+export async function getReleasedArticleByIdData(articleId: number) {
+    const stmt = db.prepare<{ articleId: number }, ReleasedArticle>('SELECT * FROM article WHERE id = @articleId');
+    try {
+        const info = stmt.get({
+            articleId
+        })
+        return info
+    } catch (e) {
+        return new Error()
+    }
+}

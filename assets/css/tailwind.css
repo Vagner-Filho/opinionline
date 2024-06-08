@@ -11,8 +11,16 @@
         @apply bg-strong-green text-white rounded-md hover:shadow-lg focus-visible:shadow-lg transition-all transform-gpu duration-700 ease-in-out focus-visible:bg-light-green hover:bg-light-green focus-visible:text-strong-green hover:text-strong-green focus-visible:outline-strong-green hover:outline-strong-green
     }
 
+    .base-shadow-transition {
+        @apply transition-shadow duration-500 ease-in-out 
+    }
+
     .shadow-hover {
-        @apply transition-shadow duration-500 ease-in-out hover:shadow-md hover:shadow-light-green
+        @apply hover:shadow-md hover:shadow-light-green
+    }
+
+    .shadow-focus {
+        @apply focus:shadow-md focus:shadow-light-green
     }
 
     .light-green-bg {

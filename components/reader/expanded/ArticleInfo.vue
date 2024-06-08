@@ -5,7 +5,7 @@
         <h1 class="font-semibold text-2xl truncate">
           {{ title }}
         </h1>
-        <div id="article-tags" class="flex my-2">
+        <div v-if="tags" id="article-tags" class="flex my-2">
           <ArticleTag v-for="tag in tags" :tag-name="tag" :tag-id="tag.toLocaleLowerCase() + '-tag'"/>
         </div>
       </main>
@@ -14,7 +14,7 @@
       </footer>
     </section>
     <div class="w-1/3" id="author-pic">
-      <img class="ml-auto" :src="authorPic ?? '/default/authorPic.svg'" :alt="'autor(a) de: ' + title" />
+      <AuthorPic :author-pic="authorPic" class="ml-auto" />
     </div>
   </div>
 </template>
@@ -24,9 +24,9 @@ import ArticleTag from './ArticleTag.vue';
 import { getUserReadableDate } from '#imports';
   defineProps<{
     title: string
-    tags: string[]
+    tags?: string[]
     releaseDate: Date | number 
-    authorPic: string | null
+    authorPic?: string
   }>();
 </script>
 

@@ -1,28 +1,23 @@
 <template>
-  <section class="max-w-4xl m-auto">
-    <main class="px-2" v-if="!isLoadingData">
-      <img :src="fullArticle.cover ?? 'default-cover'" class="h-24 w-full rounded-md" />
-      <ReaderExpandedArticleInfo :author-pic="null" :release-date="fullArticle.releaseDate" :title="fullArticle.title" :tags="['teste']" />
-      <article>
-          {{ fullArticle.text }}
-      </article>
-    </main>
-    <LoadingIndicator class="mt-32" :is-loading="isLoadingData"/>
-  </section>
+    <section class="max-w-4xl m-auto">
+        <main class="px-2" v-if="!pending && !!data">
+            <img :src="data.cover ?? 'default-cover'" class="h-24 w-full rounded-md" />
+            <ReaderExpandedArticleInfo
+                :author-pic="'/author/default_author.png'"
+                :release-date="data.releaseDate"
+                :title="data.title"
+            />
+            <article>
+                {{ data.text }}
+            </article>
+        </main>
+        <Spinner class="mt-32 mx-auto" v-if="pending" />
+    </section>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
+import type { ReleasedArticle } from '~/server/core/entities';
 
-  onMounted(() => {
-    setTimeout(() => {
-      getFullArticle()
-    }, 2000);
-  })
-
-  const isLoadingData = ref(true)
-  const fullArticle = ref()
-  function getFullArticle() {
-    const route = useRoute()
-  }
+const route = useRoute();
+const { data, pending, error } = await useFetch<ReleasedArticle>(`/api/article/${route.params.id}`);
 </script>

@@ -15,3 +15,7 @@ export async function postArticleService(article: ArticlePayload, insertToDb: (a
     }
     return Error("Desculpe, houve uma falha ao cadastrar um novo artigo :(");
 }
+
+export async function getReleasedArticleByIdService(getById: (articleId: number) => Promise<ReleasedArticle | undefined | Error>, articleId: number) {
+    return await getById(articleId);
+}

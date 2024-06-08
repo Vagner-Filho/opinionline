@@ -1,6 +1,8 @@
 <template>
     <section
-        class="rounded-md ring-1 ring-light-gray/70 dark:ring-white/30 shadow-hover hover:cursor-pointer min-h-[270px] font-josefin-sans">
+        class="rounded-md ring-1 ring-light-gray/70 dark:ring-white/30 base-shadow-transition shadow-hover shadow-focus focus:outline-none hover:cursor-pointer min-h-[270px] font-josefin-sans"
+        tabindex="0"
+    >
         <header class="relative bg-white rounded-t-md">
             <div v-if="!cover" class="rounded-t-md h-20 bg-[url('/default/cover.svg')] bg-center bg-no-repeat bg-cover"
                 id="default-cover" alt="default article cover" />
