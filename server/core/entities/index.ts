@@ -43,7 +43,7 @@ export abstract class Article {
 export interface IAuthor {
     name: string;
     email: string;
-    id: string;
+    id: number;
     picture: string;
     bio: string;
     contact: string;
@@ -62,3 +62,5 @@ export interface ICover {
 export interface IAbout {
     opinionline: string;
 }
+
+export type AboutSys = IAuthor & IAbout

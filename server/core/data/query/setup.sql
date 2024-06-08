@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS article(
 );
 
 CREATE TABLE IF NOT EXISTS about(
-    opinionline TEXT NOT NULL
+    opinionline TEXT NOT NULL DEFAULT "Onde escrevo e publico meus textos!"
 );
