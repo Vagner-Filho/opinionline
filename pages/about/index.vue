@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import type { AboutSys } from '~/server/core/entities';
-const { data, pending, error } = await useFetch<AboutSys>('/api/author')
+const { data, pending, error } = await useFetch<AboutSys>('/api/about')
 </script>
 
 <style scoped>

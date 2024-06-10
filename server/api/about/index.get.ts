@@ -1,5 +1,5 @@
 import { getAboutData } from "~/server/core/data/about"
-import { getAboutService } from "~/server/core/service/author"
+import { getAboutService } from "~/server/core/service/about"
 
 export default defineEventHandler(async (event) => {
     return getAboutService(getAboutData)
