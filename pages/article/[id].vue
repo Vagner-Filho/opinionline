@@ -19,5 +19,5 @@
 import type { ReleasedArticle } from '~/server/core/entities';
 
 const route = useRoute();
-const { data, pending, error } = await useFetch<ReleasedArticle>(`/api/article/${route.params.id}`);
+const { data, pending } = await useFetch<ReleasedArticle>(`/api/article/${route.params.id}`);
 </script>

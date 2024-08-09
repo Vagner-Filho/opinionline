@@ -33,16 +33,16 @@ async function createArticle(article: ArticleData) {
         data.set('cover', article.cover)
     }
     data.set('authorId', '1')
-    const newArticle = {
-        title: article.title,
-        text: article.text,
-        cover: article.cover,
-        authorId: 1
+    const token = useCookie<string>('token')
+    if (token.value) {
+        await $fetch('/api/article', {
+            method: "POST",
+            body: data,
+            headers: {
+                "Authorization": token.value
+            }
+        })
     }
-    console.log(await $fetch('/api/article', {
-        method: "POST",
-        body: data 
-    }))
 }
 
 const isLoadingData = ref(false);

@@ -19,3 +19,9 @@ CREATE TABLE IF NOT EXISTS article(
 CREATE TABLE IF NOT EXISTS about(
     opinionline TEXT NOT NULL DEFAULT "Onde escrevo e publico meus textos!"
 );
+
+CREATE TABLE IF NOT EXISTS user(
+    email TEXT PRIMARY KEY,
+    psswd TEXT NOT NULL,
+    authorId INTEGER UNIQUE REFERENCES author(id)
+);

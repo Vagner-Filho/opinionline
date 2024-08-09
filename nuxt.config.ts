@@ -1,3 +1,5 @@
+import { randomBytes } from 'node:crypto'
+
 export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: ["@nuxt/ui", "@nuxt/test-utils/module"],
@@ -12,5 +14,9 @@ export default defineNuxtConfig({
         classSuffix: '',
         storageKey: 'nuxt-color-mode'
     },
-    extensions: ['.sql']
+    extensions: ['.sql'],
+    runtimeConfig: {
+        psswdSecret: randomBytes(64).toString('hex'),
+        jwtSecret: randomBytes(64).toString('hex')
+    }
 })
