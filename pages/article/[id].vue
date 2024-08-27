@@ -1,6 +1,6 @@
 <template>
     <section class="max-w-4xl m-auto">
-        <main class="px-2" v-if="!pending && !!data">
+        <main class="px-2" v-if="status !== 'pending' && !!data">
             <img :src="data.cover ?? 'default-cover'" class="h-24 w-full rounded-md" />
             <ReaderExpandedArticleInfo
                 :author-pic="'/author/default_author.png'"
@@ -11,7 +11,7 @@
                 {{ data.text }}
             </article>
         </main>
-        <Spinner class="mt-32 mx-auto" v-if="pending" />
+        <Spinner class="mt-32 mx-auto" v-if="status === 'pending'" />
     </section>
 </template>
 
@@ -19,5 +19,5 @@
 import type { ReleasedArticle } from '~/server/core/entities';
 
 const route = useRoute();
-const { data, pending } = await useFetch<ReleasedArticle>(`/api/article/${route.params.id}`);
+const { data, status } = await useFetch<ReleasedArticle>(`/api/article/${route.params.id}`);
 </script>

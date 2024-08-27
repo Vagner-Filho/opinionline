@@ -1,7 +1,7 @@
 import { postArticleService } from "~/server/core/service/article";
 import { insertArticleData } from "~/server/core/data/article";
 import { getMissingFields } from "~/utils";
-import jwt from 'jsonwebtoken'
+import { checkToken } from "~/server/utils";
 
 export abstract class ArticlePayload {
     authorId: number
@@ -17,23 +17,7 @@ export abstract class ArticlePayload {
     }
 }
 export default defineEventHandler({
-    onRequest: (event) => {
-        const authHeader = getRequestHeader(event, 'Authorization');
-        if (!authHeader) {
-            throw createError({
-                statusCode: 401
-            })
-        }
-        try {
-            const { jwtSecret } = useRuntimeConfig()
-            const decoded = jwt.verify(authHeader, jwtSecret)
-        } catch (e) {
-            throw createError({
-                statusCode: 403,
-                message: e as string
-            })
-        }
-    },
+    onRequest: checkToken,
     handler: async (event) => {
         const body = await readFormData(event);
         if (!body) {
@@ -43,7 +27,7 @@ export default defineEventHandler({
             })
         }
 
-        const missingFields = getMissingFields({ authorId: 0, text: '', title: '', cover: '' }, body);
+        const missingFields = getMissingFields({ authorId: 0, text: '', title: '', release: true }, body);
 
         if (missingFields.length > 0) {
             throw createError({
@@ -58,8 +42,13 @@ export default defineEventHandler({
             title: body.get('title')! as string,
             cover: body.get('cover')! as File
         };
+
+        const release = body.get('release')
+
         return await postArticleService(
             newArticle,
+            getRequestURL(event).origin,
+            release === null || release === 'false' ? false : true,
             insertArticleData
         )
     }

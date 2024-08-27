@@ -6,13 +6,15 @@ export interface IArticle {
     releaseDate?: number;
     cover: string;
 }
-export interface ReleasedArticle extends Required<IArticle> {}
+export interface ReleasedArticle extends Required<IArticle> {
+    picture: string
+}
 
 export abstract class ArticlePayload {
     authorId: number
     text: string
     title: string
-    cover: File | undefined
+    cover: File | null
 
     constructor(article: ArticlePayload) {
         this.authorId = article.authorId
@@ -27,7 +29,7 @@ export abstract class Article {
     text: string;
     id?: number;
     authorId: number;
-    releaseDate?: number;
+    releaseDate: number | null;
     cover: string;
 
     constructor(article: Article) {
@@ -44,7 +46,7 @@ export interface IAuthor {
     name: string;
     email: string;
     id: number;
-    picture: string;
+    picture: File;
     bio: string;
     contact: string;
 }

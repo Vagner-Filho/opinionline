@@ -5,7 +5,7 @@
         <header class="relative rounded-t-md dark:bg-black bg-stone-100">
             <div v-if="!cover" class="flex items-center justify-center text-4xl select-none text-center font-great-vibes dark:text-white text-black h-20 hover:cursor-default">
                 Opinionline</div>
-            <img v-else class="h-20 object-cover mx-auto" :src="cover" id="cover" :alt="title + ' cover'" />
+            <img v-else class="h-20 object-cover mx-auto w-full rounded-t-md" :src="cover" id="cover" :alt="title + ' cover'" />
             <div class="absolute -bottom-5 left-5">
                 <AuthorPic :author-pic="authorPic" />
             </div>
@@ -50,7 +50,7 @@ export default defineComponent({
     },
     setup() {
         return {
-            getUserReadableDate
+            getUserReadableDate,
         }
     }
 })

@@ -9,11 +9,11 @@
             <main v-show="!error" class="flex flex-col mt-5 px-2">
                 <form @submit.prevent="handleSubmit">
                     <div class="my-2">
-                        <label class="text-2xl flex items-center hover:cursor-pointer" for="author-image">
-                            <AuthorPic :author-pic="authorPic" class="mr-2" />
+                        <label class="text-2xl flex items-center hover:cursor-pointer" for="author-picture">
+                            <AuthorPic :author-pic="aboutPayload.picture" class="mr-2" />
                             Alterar Foto
                         </label>
-                        <input type="file" name="authorPic" id="author-image" class="hidden"
+                        <input type="file" name="picture" id="author-picture" class="hidden"
                             @change="authorPic = getFilePreviewFromEvent($event)">
                     </div>
                     <div class="my-2 flex flex-col">
@@ -32,7 +32,7 @@
                         <label class="text-2xl px-2" for="about-author">Quem sou eu</label>
                         <textarea v-model="aboutPayload.bio"
                             class="border-none p-2 rounded-md dark:bg-neutral-800 bg-neutral-100 shadow-contour"
-                            name="author" id="about-author" />
+                            name="bio" id="about-author" />
                     </div>
                     <div class="my-2 flex flex-col">
                         <label class="text-2xl px-2" for="about-opinionline">Sobre o Opinionline</label>
@@ -62,13 +62,15 @@ import { getFilePreviewFromEvent } from '~/utils';
 import type { AboutSys } from '~/server/core/entities';
 
 const aboutPayload = ref<Partial<AboutSys>>({});
-const { data, error } = await useFetch<AboutSys>('/api/about');
-
+const { data, error } = await useAsyncData<AboutSys>('profile', () => $fetch('/api/about'));
 aboutPayload.value = { ...data.value }
 
 const authorPic = ref('');
 
-async function handleSubmit() {
-    console.log(await useFetch('/api/about', { method: 'PATCH', body: aboutPayload.value }))
+async function handleSubmit(ev: Event) {
+    const fm =  new FormData(ev.target as HTMLFormElement)
+
+    const token = useCookie<string>('token')
+    await $fetch('/api/about', { method: 'PATCH', body: fm, headers: { 'Authorization': token.value } })
 }
 </script>

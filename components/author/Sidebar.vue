@@ -5,7 +5,7 @@
         <li class="my-4 hover:cursor-pointer text-center" @click="$router.push({ name: 'author-profile' })">
           <UIcon name="i-healthicons-ui-user-profile" class="m-auto w-10 h-10 std-icon-hover" /> 
         </li>
-        <li class="my-4 hover:cursor-pointer text-center" @click="$router.push({ name: 'author-article', query: { isNew: '1' }})">
+        <li class="my-4 hover:cursor-pointer text-center" @click="$router.push({ path: '/author/article' })">
           <UIcon name="i-ph-plus" class="m-auto w-10 h-10 std-icon-hover" /> 
         </li>
         <li class="my-4 hover:cursor-pointer text-center" @click="$router.push({ name: 'author-list' })">

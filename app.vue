@@ -3,7 +3,7 @@
     <Title>Opinionline</Title>
     <h1 class="text-4xl select-none text-center font-great-vibes mt-5 hover:cursor-default" @click="handleClick">Opinionline</h1>
     <ThemePicker class="absolute top-5" />
-    <NuxtLayout :name="false ? 'author' : 'default'">
+    <NuxtLayout :name="!!useCookie('token').value && $route.fullPath.includes('author/') ? 'author' : 'default'">
       <NuxtPage />
     </NuxtLayout>
   </div>

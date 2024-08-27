@@ -9,7 +9,7 @@
                 </dd>
                 <dt>E-mail</dt>
                 <dd>
-                    {{ data.name }}
+                    {{ data.email }}
                 </dd>
                 <dt>Quem sou eu</dt>
                 <dd>

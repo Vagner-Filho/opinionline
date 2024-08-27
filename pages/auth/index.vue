@@ -17,17 +17,17 @@
 import { ref } from 'vue'
 
 const isLoadingData = ref(false)
-async function logUser(ev: SubmitEvent) {
+async function logUser(ev: Event) {
     isLoadingData.value = true;
 
     const fd = new FormData(ev.target as HTMLFormElement)
-    const { data, status } = await useFetch<{ token: string }>('/api/login', {
+    const res = await $fetch<{ token: string }>('/api/login', {
         method: 'POST',
         body: fd
     })
-    if (status.value && data.value) {
+    if (res && res.token) {
         const token = useCookie<string>('token')
-        token.value = data.value.token
+        token.value = res.token
         const router = useRouter()
         router.push({ path: '/author/article' })
     }
