@@ -1,4 +1,4 @@
-import { releaseArticle } from "~/server/core/data/article"
+import { releaseArticle } from "~~/server/core/data/article"
 
 export default defineEventHandler({
     onRequest: checkToken,

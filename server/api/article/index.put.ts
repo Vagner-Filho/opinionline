@@ -1,4 +1,4 @@
-import { updateArticleData } from "~/server/core/data/article"
+import { updateArticleData } from "~~/server/core/data/article"
 import { getMissingFields } from "~/utils";
 
 export default defineEventHandler({

@@ -1,7 +1,7 @@
-import { postArticleService } from "~/server/core/service/article";
-import { insertArticleData } from "~/server/core/data/article";
+import { postArticleService } from "~~/server/core/service/article";
+import { insertArticleData } from "~~/server/core/data/article";
 import { getMissingFields } from "~/utils";
-import { checkToken } from "~/server/utils";
+import { checkToken } from "~~/server/utils";
 
 export abstract class ArticlePayload {
     authorId: number

@@ -1,4 +1,4 @@
-import { deleteArticle } from "~/server/core/data/article";
+import { deleteArticle } from "~~/server/core/data/article";
 
 export default defineEventHandler({
     onRequest: checkToken,

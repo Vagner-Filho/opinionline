@@ -1,9 +1,9 @@
-import { getAllArticles } from "~/server/core/data/article";
-import { checkToken } from "~/server/utils";
+import { getAllArticles } from "~~/server/core/data/article";
+import { checkToken } from "#imports";
 
 export default defineEventHandler({
     onRequest: checkToken,
     handler: async () => {
-        return getAllArticles()        
+        return getAllArticles()
     }
 })

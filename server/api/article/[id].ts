@@ -1,5 +1,5 @@
-import { getReleasedArticleByIdService } from "~/server/core/service/article"
-import { getReleasedArticleByIdData } from "~/server/core/data/article"
+import { getReleasedArticleByIdService } from "~~/server/core/service/article"
+import { getReleasedArticleByIdData } from "~~/server/core/data/article"
 
 export default defineEventHandler(async (event) => {
     const articleId = getRouterParam(event, 'id');

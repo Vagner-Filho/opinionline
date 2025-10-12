@@ -14,6 +14,7 @@
             :disabled="isViewOnly" />
         <textarea name="text" id="article-text" class="std-author-input py-4" v-model="articleData.text" cols="30"
             rows="10" :placeholder="articleTextPlaceholder" :disabled="isViewOnly" required></textarea>
+        <div contenteditable></div>
         <div class="flex font-josefin-sans my-2">
             <button class="std-btn-shape dark:bg-gray-500 bg-light-gray drop-shadow-md text-gray text-lg w-28 px-4 h-8"
                 type="button" :disabled="isViewOnly">Cancelar</button>

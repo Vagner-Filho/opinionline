@@ -1,6 +1,6 @@
-import { patchAboutData } from "~/server/core/data/about";
-import { AboutSys } from "~/server/core/entities";
-import { patchAboutService } from "~/server/core/service/about";
+import { patchAboutData } from "~~/server/core/data/about";
+import { AboutSys } from "~~/server/core/entities";
+import { patchAboutService } from "~~/server/core/service/about";
 import jwt from "jsonwebtoken"
 
 export default defineEventHandler({
