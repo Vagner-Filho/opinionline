@@ -4,7 +4,7 @@
             <ul class="flex h-12 w-full">
                 <li class="w-3/5"
                     @click="$router.push({ path: `article/${id}`, query: { isViewOnly: '1' } })">
-                    <h1 class="text-2xl truncate h-full leading-[3rem] hover:cursor-pointer">{{ title }}</h1>
+                    <h1 class="text-2xl truncate h-full leading-12 hover:cursor-pointer">{{ title }}</h1>
                 </li>
                 <li class="w-1/5 text-center flex items-center px-2">
                     <CustomLabel class="hover:cursor-pointer" :name="'released-' + id" :value="isReleased"

@@ -3,12 +3,6 @@ import { randomBytes } from 'node:crypto'
 export default defineNuxtConfig({
     devtools: { enabled: true },
     css: ['~/assets/css/main.css'],
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {},
-        },
-    },
     modules: ["@nuxt/ui", "@nuxt/test-utils/module"],
 
     // @ts-ignore

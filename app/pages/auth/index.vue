@@ -1,7 +1,7 @@
 <template>
     <div>
         <form
-            class="shadow-sm shadow-strong-green font-josefin-sans w-[320px] mt-[112px] flex flex-col items-center h-[270px] m-auto rounded-md"
+            class="shadow-xs shadow-strong-green font-josefin-sans w-[320px] mt-[112px] flex flex-col items-center h-[270px] m-auto rounded-md"
             @submit.prevent="logUser">
             <input class="w-[276px] h-[30px] mt-[44px] mb-[11px] dark:bg-[#3b3b3b] bg-[#D2D2D2] rounded-md px-2"
                 id="email" name="email" type="text" aria-placeholder="e-mail" placeholder="e-mail" required>

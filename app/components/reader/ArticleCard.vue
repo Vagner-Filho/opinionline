@@ -1,6 +1,6 @@
 <template>
     <section
-        class="rounded-md ring-1 ring-light-gray/70 dark:ring-white/30 base-shadow-transition shadow-hover shadow-focus focus:outline-none hover:cursor-pointer min-h-[270px] font-josefin-sans"
+        class="rounded-md ring-1 ring-light-gray/70 dark:ring-white/30 base-shadow-transition shadow-hover shadow-focus focus:outline-hidden hover:cursor-pointer min-h-[270px] font-josefin-sans"
         tabindex="0">
         <header class="relative rounded-t-md dark:bg-black bg-stone-100">
             <div v-if="!cover" class="flex items-center justify-center text-4xl select-none text-center font-great-vibes dark:text-white text-black h-20 hover:cursor-default">

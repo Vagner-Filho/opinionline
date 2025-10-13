@@ -1,54 +1,84 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import "@nuxt/ui";
 
-@layer components {
-    .std-btn-shape {
-        @apply rounded-3xl border-0 px-3 py-1 text-xl
-    }
+@custom-variant dark (&:is(.dark *));
 
-    .confirmation-btn {
-        @apply bg-strong-green text-white rounded-md hover:shadow-lg focus-visible:shadow-lg transition-all transform-gpu duration-700 ease-in-out focus-visible:bg-light-green hover:bg-light-green focus-visible:text-strong-green hover:text-strong-green focus-visible:outline-strong-green hover:outline-strong-green
-    }
+@theme {
+  --font-*: initial;
+  --font-great-vibes: GreatVibes, sans-serif;
+  --font-josefin-sans: JosefinSans, sans-serif;
 
-    .base-shadow-transition {
-        @apply transition-shadow duration-500 ease-in-out 
-    }
+  --color-light-green: #ccffc8;
+  --color-strong-green: #2dcf3d;
+  --color-light-gray: #dcdcdc;
+  --color-gray: #494949;
 
-    .shadow-hover {
-        @apply hover:shadow-md hover:shadow-light-green
-    }
+  --shadow-contour: inset 0px 0px 2px 1px rgb(0 0 0 / 0.05);
+}
 
-    .shadow-focus {
-        @apply focus:shadow-md focus:shadow-light-green
-    }
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-    .light-green-bg {
-        @apply bg-light-green
-    }
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
-    .navbar-btn {
-        @apply font-josefin-sans w-1/4 h-8 text-sm md:text-lg max-w-[200px] text-center bg-light-green
-    }
+@utility std-btn-shape {
+  @apply rounded-3xl border-0 px-3 py-1 text-xl;
+}
 
-    .navbar-button-hover {
-        @apply hover:bg-strong-green hover:text-white transition-colors transform-gpu duration-500 ease-in-out
-    }
+@utility confirmation-btn {
+  @apply bg-strong-green text-white rounded-md hover:shadow-lg focus-visible:shadow-lg transition-all transform-gpu duration-700 ease-in-out focus-visible:bg-light-green hover:bg-light-green focus-visible:text-strong-green hover:text-strong-green focus-visible:outline-strong-green hover:outline-strong-green;
+}
 
-    .std-author-input {
-        @apply px-4 font-josefin-sans rounded-md shadow-sm dark:shadow-light-gray text-lg
-    }
+@utility base-shadow-transition {
+  @apply transition-shadow duration-500 ease-in-out;
+}
 
-    .std-icon-hover {
-        @apply transition-all duration-500 ease-in-out hover:scale-110 hover:text-strong-green
-    }
+@utility shadow-hover {
+  @apply hover:shadow-md hover:shadow-light-green;
+}
+
+@utility shadow-focus {
+  @apply focus:shadow-md focus:shadow-light-green;
+}
+
+@utility light-green-bg {
+  @apply bg-light-green;
+}
+
+@utility navbar-btn {
+  @apply font-josefin-sans w-1/4 h-8 text-sm md:text-lg max-w-[200px] text-center bg-light-green;
+}
+
+@utility navbar-button-hover {
+  @apply hover:bg-strong-green hover:text-white transition-colors transform-gpu duration-500 ease-in-out;
+}
+
+@utility std-author-input {
+  @apply px-4 font-josefin-sans rounded-md shadow-xs dark:shadow-light-gray text-lg;
+}
+
+@utility std-icon-hover {
+  @apply transition-all duration-500 ease-in-out hover:scale-110 hover:text-strong-green;
 }
 
 @layer base {
 
     input,
     textarea {
-        @apply focus-visible:outline-strong-green appearance-none outline-none outline-offset-0
+        @apply focus-visible:outline-strong-green appearance-none outline-hidden outline-offset-0
     }
 
     html {
