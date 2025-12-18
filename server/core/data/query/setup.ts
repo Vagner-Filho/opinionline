@@ -11,7 +11,7 @@ export default [
     `CREATE TABLE IF NOT EXISTS article(
     id INTEGER PRIMARY KEY,
     title TEXT NOT NULL,
-    text TEXT NOT NULL,
+    content TEXT NOT NULL,
     authorId INTEGER REFERENCES author(id),
     releaseDate DATETIME,
     cover TEXT NOT NULL

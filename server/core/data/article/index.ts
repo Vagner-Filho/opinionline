@@ -25,7 +25,7 @@ export async function insertArticleData(article: ArticlePayload, origin: string,
     const releaseDate = release ? new Date().getTime() : null;
     let coverPath: string = '';
 
-    if (article.cover) {
+    if (article.cover && article.cover.size > 0) {
         const coverName = article.cover.name.toLowerCase().replaceAll(' ', '-')
         const imgUrl = new URL(join(origin, '/file', coverName)).href
         const baseCoverPath = join(process.cwd(), '/server/file/article')
@@ -41,11 +41,11 @@ export async function insertArticleData(article: ArticlePayload, origin: string,
         }
     }
 
-    const stmt = db.prepare<Article>(`INSERT INTO article (title, text, authorId, releaseDate, cover) VALUES (@title, @text, @authorId, @releaseDate, @cover)`)
+    const stmt = db.prepare<Article>(`INSERT INTO article (title, content, authorId, releaseDate, cover) VALUES (@title, @content, @authorId, @releaseDate, @cover)`)
     try {
         const info = stmt.run({
             title: article.title,
-            text: article.text,
+            content: article.content,
             authorId: article.authorId,
             cover: coverPath,
             releaseDate: releaseDate
@@ -78,8 +78,8 @@ export async function updateArticleData(article: ArticlePayload & { id: number, 
 
     try {
         const stmtText = !!article.cover
-            ? `UPDATE article SET (title, text, authorId, releaseDate, cover) = (@title, @text, @authorId, @releaseDate, @cover) WHERE id = @id`
-            : `UPDATE article SET (title, text, authorId, releaseDate) = (@title, @text, @authorId, @releaseDate) WHERE id = @id`
+            ? `UPDATE article SET (title, content, authorId, releaseDate, cover) = (@title, @content, @authorId, @releaseDate, @cover) WHERE id = @id`
+            : `UPDATE article SET (title, content, authorId, releaseDate) = (@title, @content, @authorId, @releaseDate) WHERE id = @id`
 
         const stmt = db.prepare<Article>(stmtText)
 

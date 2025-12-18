@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { Article } from '~/server/core/entities';
+import { Article } from '~~/server/core/entities';
 
 const { data, error } = await useFetch<Array<Required<Article>>>(
     '/api/article/all',

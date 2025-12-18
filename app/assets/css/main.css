@@ -32,6 +32,21 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+  h1 {
+    @apply text-4xl
+  }
+  h2 {
+    @apply text-2xl
+  }
+  h3 {
+    @apply text-xl
+  }
+  ul {
+    @apply list-disc
+  }
+  ol {
+    @apply list-decimal
+  }
 }
 
 @utility std-btn-shape {

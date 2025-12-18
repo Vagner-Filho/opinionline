@@ -1,17 +1,18 @@
 import { postArticleService } from "~~/server/core/service/article";
-import { insertArticleData } from "~~/server/core/data/article";
+import { insertArticleData, getReleasedArticleByIdData } from "~~/server/core/data/article";
 import { getMissingFields } from "~/utils";
 import { checkToken } from "~~/server/utils";
+import { generateArticlePage } from "~~/server/core/service/page-generator";
 
 export abstract class ArticlePayload {
     authorId: number
-    text: string
+    content: string
     title: string
     cover: File | undefined
 
     constructor(article: ArticlePayload) {
         this.authorId = article.authorId
-        this.text = article.text
+        this.content = article.content
         this.title = article.title
         this.cover = article.cover
     }
@@ -27,7 +28,7 @@ export default defineEventHandler({
             })
         }
 
-        const missingFields = getMissingFields({ authorId: 0, text: '', title: '', release: true }, body);
+        const missingFields = getMissingFields({ authorId: 0, content: '', title: '', release: true }, body);
 
         if (missingFields.length > 0) {
             throw createError({
@@ -38,18 +39,28 @@ export default defineEventHandler({
 
         const newArticle = {
             authorId: Number(body.get('authorId')!),
-            text: body.get('text')! as string,
+            content: body.get('content')! as string,
             title: body.get('title')! as string,
             cover: body.get('cover')! as File
         };
 
         const release = body.get('release')
 
-        return await postArticleService(
+        const articleId = await postArticleService(
             newArticle,
             getRequestURL(event).origin,
             release === null || release === 'false' ? false : true,
             insertArticleData
         )
+
+        if (release && !(articleId instanceof Error)) {
+            const article = await getReleasedArticleByIdData(articleId as number);
+            if (article instanceof Error) {
+                throw article
+            }
+            await generateArticlePage(article);
+        }
+
+        return articleId;
     }
 })

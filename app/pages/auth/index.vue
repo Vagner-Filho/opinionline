@@ -4,11 +4,13 @@
             class="shadow-xs shadow-strong-green font-josefin-sans w-[320px] mt-[112px] flex flex-col items-center h-[270px] m-auto rounded-md"
             @submit.prevent="logUser">
             <input class="w-[276px] h-[30px] mt-[44px] mb-[11px] dark:bg-[#3b3b3b] bg-[#D2D2D2] rounded-md px-2"
-                id="email" name="email" type="text" aria-placeholder="e-mail" placeholder="e-mail" required>
+                id="email" name="email" type="text" aria-placeholder="e-mail" placeholder="e-mail" required
+                :disabled="isLoadingData" autofocus>
             <input class="w-[276px] h-[30px] mb-[16px] dark:bg-[#3b3b3b] bg-[#D2D2D2] rounded-md px-2" id="senha"
-                type="password" name="psswd" aria-placeholder="senha" placeholder="senha" required>
+                type="password" name="psswd" aria-placeholder="senha" placeholder="senha" required
+                :disabled="isLoadingData">
             <button v-if="!isLoadingData" type="submit" class="confirmation-btn std-btn-shape text-base">Entrar</button>
-            <Spinner v-else class="mt-32" />
+            <Spinner v-else class="!size-7" />
         </form>
     </div>
 </template>

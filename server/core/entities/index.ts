@@ -12,13 +12,13 @@ export interface ReleasedArticle extends Required<IArticle> {
 
 export abstract class ArticlePayload {
     authorId: number
-    text: string
+    content: string
     title: string
     cover: File | null
 
     constructor(article: ArticlePayload) {
         this.authorId = article.authorId
-        this.text = article.text
+        this.content = article.content
         this.title = article.title
         this.cover = article.cover
     }
@@ -26,7 +26,7 @@ export abstract class ArticlePayload {
 
 export abstract class Article {
     title: string;
-    text: string;
+    content: string;
     id?: number;
     authorId: number;
     releaseDate: number | null;
@@ -36,7 +36,7 @@ export abstract class Article {
         this.authorId = article.authorId;
         this.id = article.id;
         this.title = article.title;
-        this.text = article.text;
+        this.content = article.content;
         this.cover = article.cover;
         this.releaseDate = article.releaseDate;
     }

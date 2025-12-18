@@ -10,9 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ReleasedArticle } from '~/server/core/entities';
+import type { ArticlePayload } from '~/components/author/article/Form.vue';
+import type { ReleasedArticle } from '~~/server/core/entities';
 
-function handleSubmit(articleData: FormData, release: boolean = true) {
+function handleSubmit(articleData: ArticlePayload, release: boolean = true) {
     const route = useRoute()
     const articleId = route.params.id;
     if (!articleId) {
@@ -22,17 +23,21 @@ function handleSubmit(articleData: FormData, release: boolean = true) {
     }
 }
 
-async function createArticle(article: FormData, release: boolean) {
-    const data = article
-    data.set('authorId', '1')
-    data.set('release', release.toString())
+async function createArticle(article: ArticlePayload, release: boolean) {
+    const data = article;
+    data.release = release;
+    data.authorId = 1;
+    const fd = new FormData();
+    for (const [key, value] of Object.entries(data)) {
+        fd.set(key, value)
+    }
     const token = useCookie<string>('token')
     if (token.value) {
         await $fetch('/api/article', {
             method: "POST",
-            body: data,
+            body: fd,
             headers: {
-                "Authorization": token.value
+                "Authorization": token.value,
             }
         })
     }

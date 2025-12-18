@@ -1,4 +1,5 @@
-import { releaseArticle } from "~~/server/core/data/article"
+import { releaseArticle, getReleasedArticleByIdData } from "~~/server/core/data/article"
+import { generateArticlePage } from "~~/server/core/service/page-generator";
 
 export default defineEventHandler({
     onRequest: checkToken,
@@ -11,6 +12,16 @@ export default defineEventHandler({
             })
         }
 
-        return releaseArticle(Number(articleId), queryParams.release === 'true' ? true : false)
+        const release = queryParams.release === 'true' ? true : false;
+
+        if (release) {
+            const article = await getReleasedArticleByIdData(Number(articleId));
+            if (article instanceof Error) {
+                throw article
+            }
+            await generateArticlePage(article);
+        }
+
+        return releaseArticle(Number(articleId), release)
     }
 })

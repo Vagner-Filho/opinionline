@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "test:unit": "vitest --config ./vitest.config.ts"
+    "test:unit": "vitest --config ./vitest.config.ts",
+    "postbuild": "ts-node scripts/generate-static-pages.ts"
   },
   "dependencies": {
     "@nuxt/ui": "^4.0.1",
@@ -32,6 +33,7 @@
     "playwright-core": "^1.46.1",
     "tailwindcss": "^4.1.14",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "ts-node": "^10.9.2"
   }
 }
